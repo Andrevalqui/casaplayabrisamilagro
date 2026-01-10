@@ -104,26 +104,35 @@ h1, h2, h3 {
 /* ESTILOS DEL CARRUSEL SWIPER */
 .swiper {
     width: 100%;
-    padding-bottom: 50px;
-    /* Esto permite que las flechas vivan fuera del cuadro de fotos */
-    overflow: visible !important;
+    padding-bottom: 40px;
+    /* Quitamos el overflow visible porque ahora van adentro */
 }
 
 .swiper-button-next, .swiper-button-prev {
     color: var(--color-gold) !important;
-    background-color: white;
-    width: 45px; /* Un poco más pequeñas y elegantes */
+    background-color: rgba(255, 255, 255, 0.9); /* Blanco casi sólido */
+    width: 45px;
     height: 45px;
     border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: transform 0.3s;
-    z-index: 10; /* Para asegurar que estén encima de todo */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3); /* Sombra para que se note sobre la foto */
+    transition: all 0.3s ease;
+    z-index: 10;
 }
 
+/* POSICIÓN DE FLECHAS (ADENTRO DE LA FOTO) */
+.swiper-button-next { 
+    right: 15px !important; 
+}
+
+.swiper-button-prev { 
+    left: 15px !important; 
+}
+
+/* Efecto al pasar el mouse */
 .swiper-button-next:hover, .swiper-button-prev:hover {
-    transform: scale(1.1);
     background-color: var(--color-gold);
     color: white !important;
+    transform: scale(1.1);
 }
 
 .swiper-button-next:after, .swiper-button-prev:after {
@@ -133,17 +142,4 @@ h1, h2, h3 {
 
 .swiper-pagination-bullet-active {
     background-color: var(--color-gold) !important;
-}
-
-/* POSICIÓN DE FLECHAS */
-@media (min-width: 992px) {
-    /* Las acercamos un poco más (-45px en vez de -60px) */
-    .swiper-button-next { right: -45px !important; }
-    .swiper-button-prev { left: -45px !important; }
-}
-
-@media (max-width: 991px) {
-    /* En celular las pegamos al borde pero visibles */
-    .swiper-button-next { right: -10px !important; }
-    .swiper-button-prev { left: -10px !important; }
 }
