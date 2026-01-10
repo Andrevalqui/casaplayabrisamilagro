@@ -149,3 +149,16 @@ h1, h2, h3 {
     cursor: zoom-in; /* Muestra una lupa al pasar el mouse */
     display: block;  /* Asegura que ocupe todo el espacio */
 }
+
+/* --- NAVEGACIÓN SUAVE --- */
+html {
+    scroll-behavior: smooth; /* Hace que baje deslizándose, no de golpe */
+    scroll-padding-top: 80px; /* Para que la barra de arriba no tape el título al bajar */
+}
+
+/* Ajuste para que la barra de menú se vea bien sobre el video */
+.navbar {
+    backdrop-filter: blur(10px); /* Efecto vidrio borroso moderno */
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
