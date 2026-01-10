@@ -8,17 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- Estilos del Carrusel -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
 <body>
 
-    <!-- PORTADA CON VIDEO DE FONDO -->
+    <!-- HERO -->
     <header class="hero-section">
         <video autoplay muted loop playsinline class="back-video">
             <source src="{{ url_for('static', filename='video/tour.mp4') }}" type="video/mp4">
         </video>
-        
         <div class="content text-center text-white">
             <h1 class="display-1 fw-bold mb-3">{{ info.nombre }}</h1>
             <p class="h4 mb-4 fw-light">{{ info.ubicacion }}</p>
@@ -29,13 +27,11 @@
         <div class="overlay"></div>
     </header>
 
-    <!-- DESCRIPCIÓN -->
+    <!-- EXPERIENCIA -->
     <section class="py-5 container text-center">
         <h2 class="section-title mt-4">La Experiencia</h2>
         <div class="divider mx-auto mb-4"></div>
-        <p class="lead text-muted mx-auto" style="max-width: 800px; font-weight: 300;">
-            {{ info.descripcion }}
-        </p>
+        <p class="lead text-muted mx-auto" style="max-width: 800px; font-weight: 300;">{{ info.descripcion }}</p>
     </section>
 
     <!-- COMODIDADES -->
@@ -54,13 +50,13 @@
         </div>
     </section>
 
-    <!-- GALERÍA TIPO CARRUSEL (SLIDER) -->
+    <!-- GALERÍA (CARRUSEL) -->
     <section class="py-5">
-        <div class="container">
+        <!-- AGREGADO px-5 PARA QUE LAS FLECHAS TENGAN ESPACIO -->
+        <div class="container px-5">
             <h2 class="section-title text-center">Nuestros Espacios</h2>
             <div class="divider mx-auto mb-5"></div>
             
-            <!-- Contenedor principal del Slider -->
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     {% for foto in galeria %}
@@ -70,13 +66,11 @@
                                  class="img-fluid w-100" 
                                  style="height: 400px; object-fit: cover; border-radius: 8px;" 
                                  loading="lazy"
-                                 alt="Foto casa playa">
+                                 alt="Foto">
                         </div>
                     </div>
                     {% endfor %}
                 </div>
-                
-                <!-- Flechas y Puntos -->
                 <div class="swiper-button-next text-gold"></div>
                 <div class="swiper-button-prev text-gold"></div>
                 <div class="swiper-pagination"></div>
@@ -109,14 +103,11 @@
             <div class="divider mx-auto mb-4"></div>
             <p class="mb-4">A solo minutos de la Plaza de Armas de Pacasmayo.</p>
 
-            <!-- Mapa Incrustado (Visual) -->
-            <div class="ratio ratio-21x9 shadow-lg rounded mb-4 border border-2">
-                <!-- He generado un iframe que apunta a la zona de tu link -->
+            <div class="ratio ratio-21x9 shadow-lg rounded mb-4 border border-2 mx-auto" style="max-width: 900px;">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.568466657864!2d-79.5783845856866!3d-7.455301594619717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjcnMTkuMSJTIDc5wrAzNCczNC4zIlc!5e0!3m2!1ses!2spe!4v1645000000000!5m2!1ses!2spe" 
                         style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
 
-            <!-- Botón con tu Link de "Cómo llegar" -->
             <a href="{{ info.mapa_link }}" target="_blank" class="btn btn-outline-dark btn-lg rounded-pill px-4">
                 <i class="fas fa-map-marked-alt me-2"></i> Ver ruta en Google Maps
             </a>
@@ -131,21 +122,14 @@
         </a>
     </footer>
 
-    <!-- SCRIPT DEL CARRUSEL -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
+            pagination: { el: ".swiper-pagination", clickable: true },
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
             breakpoints: {
                 640: { slidesPerView: 2 },
                 1024: { slidesPerView: 3 }
@@ -154,4 +138,3 @@
     </script>
 </body>
 </html>
-
