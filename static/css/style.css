@@ -162,3 +162,35 @@ html {
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
+/* --- ESTILOS DE LUJO PARA EL TÍTULO --- */
+
+/* 1. El nombre de la casa (Estilo Firma) */
+.hero-title {
+    font-family: 'Great Vibes', cursive; /* Letra manuscrita */
+    font-size: 6rem; /* Muy grande */
+    font-weight: 400;
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.6); /* Sombra para que se lea sobre el video */
+    line-height: 1.2;
+}
+
+/* 2. La ubicación (Estilo Minimalista) */
+.hero-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    text-transform: uppercase; /* Todo mayúsculas */
+    letter-spacing: 6px; /* Letras muy separadas (Efecto Lujo) */
+    font-weight: 300; /* Letra fina */
+    text-shadow: 1px 1px 10px rgba(0,0,0,0.8);
+    margin-top: 10px;
+}
+
+/* Ajuste para celulares (para que no se vea gigante) */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 4rem; /* Un poco más pequeño en celular */
+    }
+    .hero-subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 3px; /* Menos separación en celular */
+    }
+}
