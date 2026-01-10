@@ -1,0 +1,24 @@
+.hero-section {
+    height: 90vh; /* Ocupa casi toda la pantalla inicial */
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.hover-zoom {
+    transition: transform 0.3s ease;
+}
+
+.hover-zoom:hover {
+    transform: scale(1.02); /* Efecto sutil al pasar el mouse */
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #ff9800;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e68900;
+    color: #fff;
+}
