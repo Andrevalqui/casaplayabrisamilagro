@@ -7,8 +7,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
+    <!-- Tu CSS (con ?v=3 para asegurar actualización) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3">
+    <!-- Estilos del Carrusel -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <!-- Estilos para el efecto Lightbox (Abrir foto grande) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 </head>
 <body>
 
@@ -50,7 +54,7 @@
         </div>
     </section>
 
-    <!-- 4. GALERÍA (FLECHAS ADENTRO) -->
+    <!-- 4. GALERÍA (CON EFECTO CLIC PARA ABRIR) -->
     <section class="py-5">
         <div class="container">
             <h2 class="section-title text-center">Nuestros Espacios</h2>
@@ -61,11 +65,14 @@
                     {% for foto in galeria %}
                     <div class="swiper-slide">
                         <div class="photo-frame shadow-sm">
-                            <img src="{{ url_for('static', filename='img/' + foto) }}" 
-                                 class="img-fluid w-100" 
-                                 style="height: 400px; object-fit: cover; border-radius: 8px;" 
-                                 loading="lazy"
-                                 alt="Foto">
+                            <!-- ENVOLVEMOS LA FOTO EN UN LINK PARA QUE SE ABRA -->
+                            <a href="{{ url_for('static', filename='img/' + foto) }}" class="glightbox">
+                                <img src="{{ url_for('static', filename='img/' + foto) }}" 
+                                     class="img-fluid w-100" 
+                                     style="height: 400px; object-fit: cover; border-radius: 8px;" 
+                                     loading="lazy"
+                                     alt="Foto">
+                            </a>
                         </div>
                     </div>
                     {% endfor %}
@@ -75,6 +82,8 @@
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </div>
+            <!-- Texto pequeño para indicar que se puede dar clic -->
+            <p class="text-center text-muted mt-3 small"><i class="fas fa-search-plus"></i> Haz clic en las fotos para ampliarlas</p>
         </div>
     </section>
 
@@ -119,7 +128,6 @@
                 </div>
                 {% endfor %}
             </div>
-            <!-- Pequeño copyright al final -->
             <div class="mt-5 text-muted small">
                 &copy; 2024 {{ info.nombre }}. Todos los derechos reservados.
             </div>
@@ -128,7 +136,11 @@
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Script para abrir fotos grandes -->
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
     <script>
+        // Configuración del Carrusel
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 1,
             spaceBetween: 20,
@@ -140,8 +152,13 @@
                 1024: { slidesPerView: 3 }
             },
         });
+
+        // Configuración del Lightbox (Abrir fotos)
+        const lightbox = GLightbox({
+            touchNavigation: true,
+            loop: true,
+            autoplayVideos: true
+        });
     </script>
 </body>
 </html>
-
-
