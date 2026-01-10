@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ info.nombre }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+</head>
+<body>
+
+    <!-- PORTADA CON VIDEO DE FONDO -->
+    <header class="hero-section">
+        <!-- El video se reproduce solo, sin sonido y en bucle -->
+        <video autoplay muted loop playsinline class="back-video">
+            <source src="{{ url_for('static', filename='video/tour.mp4') }}" type="video/mp4">
+        </video>
+        
+        <div class="content text-center text-white">
+            <h1 class="display-1 fw-bold mb-3">{{ info.nombre }}</h1>
+            <p class="h4 mb-4 fw-light">{{ info.ubicacion }}</p>
+            <a href="{{ ws_link }}" class="btn btn-marketing btn-lg mt-3">
+                <i class="fab fa-whatsapp"></i> Reservar Ahora
+            </a>
+        </div>
+        <div class="overlay"></div>
+    </header>
+
+    <!-- DESCRIPCIÓN ELEGANTE -->
+    <section class="py-5 container text-center">
+        <h2 class="section-title mt-4">La Experiencia</h2>
+        <div class="divider mx-auto mb-4"></div>
+        <p class="lead text-muted mx-auto" style="max-width: 800px; font-weight: 300;">
+            {{ info.descripcion }}
+        </p>
+    </section>
+
+    <!-- COMODIDADES (Iconos flotantes) -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row text-center g-4">
+                {% for servicio in servicios %}
+                <div class="col-md-4 col-6">
+                    <div class="service-card p-4 bg-white rounded shadow-sm h-100">
+                        <i class="fas {{ servicio.icono }} fa-2x text-gold mb-3"></i>
+                        <h6 class="text-uppercase ls-1">{{ servicio.nombre }}</h6>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERÍA TIPO CARRUSEL (SLIDER) -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Nuestros Espacios</h2>
+            <div class="divider mx-auto mb-5"></div>
+            
+            <!-- Contenedor principal del Slider -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    {% for foto in galeria %}
+                    <div class="swiper-slide">
+                        <div class="photo-frame shadow-sm">
+                            <!-- Al dar clic, la imagen se abre en grande (opcional) -->
+                            <img src="{{ url_for('static', filename='img/' + foto) }}" 
+                                 class="img-fluid w-100" 
+                                 style="height: 350px; object-fit: cover; border-radius: 10px;" 
+                                 loading="lazy"
+                                 alt="Foto casa playa">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Flechas de navegación -->
+                <div class="swiper-button-next text-gold"></div>
+                <div class="swiper-button-prev text-gold"></div>
+                <!-- Puntos de paginación abajo -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="py-5 bg-dark text-white">
+        <div class="container text-center">
+            <h2 class="mb-5">Lo que dicen nuestros huéspedes</h2>
+            <div class="row justify-content-center">
+                {% for review in reviews %}
+                <div class="col-md-4 mb-4">
+                    <div class="review-box p-4 border border-secondary rounded">
+                        <div class="stars mb-2 text-warning">★★★★★</div>
+                        <p class="fst-italic">"{{ review.comentario }}"</p>
+                        <small class="text-uppercase text-gold">{{ review.nombre }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- BOTÓN FINAL -->
+    <footer class="text-center py-5 bg-gold text-white">
+        <h3 class="mb-3">¿Te imaginas despertando aquí?</h3>
+        <a href="{{ ws_link }}" class="btn btn-light btn-lg rounded-pill px-5 shadow">
+            Contactar al Anfitrión
+        </a>
+    </footer>
+<!-- Script del Carrusel (Swiper) -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Configuración del Carrusel -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,      // En celular muestra 1 foto
+            spaceBetween: 20,      // Espacio entre fotos
+            loop: true,            // Infinito (vuelve al inicio)
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2, // En Tablet muestra 2 fotos
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3, // En PC muestra 3 fotos
+                    spaceBetween: 30,
+                },
+            },
+        });
+    </script>
+
+</body>
+</html>
