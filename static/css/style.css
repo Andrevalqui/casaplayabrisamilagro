@@ -101,26 +101,23 @@ h1, h2, h3 {
     transform: scale(1.1); /* Zoom suave al pasar mouse */
 }
 
-/* ESTILOS DEL CARRUSEL */
+/* ESTILOS DEL CARRUSEL SWIPER */
 .swiper {
     width: 100%;
-    padding-bottom: 50px; /* Espacio para los puntitos abajo */
+    padding-bottom: 50px;
 }
-
 .swiper-button-next, .swiper-button-prev {
-    color: var(--color-gold) !important; /* Flechas doradas */
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    color: var(--color-gold) !important;
+    background-color: rgba(255, 255, 255, 0.8);
     width: 50px;
     height: 50px;
-    border-radius: 50%; /* Flechas redondas */
+    border-radius: 50%;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
-
 .swiper-button-next:after, .swiper-button-prev:after {
     font-size: 20px;
     font-weight: bold;
 }
-
 .swiper-pagination-bullet-active {
     background-color: var(--color-gold) !important;
 }
