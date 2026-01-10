@@ -143,3 +143,9 @@ h1, h2, h3 {
 .swiper-pagination-bullet-active {
     background-color: var(--color-gold) !important;
 }
+
+/* CURSOR PARA GALERÍA */
+.photo-frame a {
+    cursor: zoom-in; /* Muestra una lupa al pasar el mouse */
+    display: block;  /* Asegura que ocupe todo el espacio */
+}
