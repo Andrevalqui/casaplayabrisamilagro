@@ -105,27 +105,29 @@ h1, h2, h3 {
 .swiper {
     width: 100%;
     padding-bottom: 50px;
-    /* IMPORTANTE: Permite que las flechas se vean fuera del cuadro */
-    overflow: visible !important; 
+    /* Esto permite que las flechas vivan fuera del cuadro de fotos */
+    overflow: visible !important;
 }
 
 .swiper-button-next, .swiper-button-prev {
     color: var(--color-gold) !important;
-    background-color: white; /* Fondo totalmente blanco */
-    width: 50px;
-    height: 50px;
+    background-color: white;
+    width: 45px; /* Un poco más pequeñas y elegantes */
+    height: 45px;
     border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Sombra más fuerte */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     transition: transform 0.3s;
+    z-index: 10; /* Para asegurar que estén encima de todo */
 }
 
 .swiper-button-next:hover, .swiper-button-prev:hover {
-    transform: scale(1.1); /* Efecto al pasar el mouse */
-    color: #2b2b2b !important; /* Cambia a negro al tocar */
+    transform: scale(1.1);
+    background-color: var(--color-gold);
+    color: white !important;
 }
 
 .swiper-button-next:after, .swiper-button-prev:after {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
 
@@ -133,15 +135,15 @@ h1, h2, h3 {
     background-color: var(--color-gold) !important;
 }
 
-/* POSICIÓN DE FLECHAS (AFUERA) */
-/* En PC las sacamos hacia los lados */
+/* POSICIÓN DE FLECHAS */
 @media (min-width: 992px) {
-    .swiper-button-next { right: -60px !important; }
-    .swiper-button-prev { left: -60px !important; }
+    /* Las acercamos un poco más (-45px en vez de -60px) */
+    .swiper-button-next { right: -45px !important; }
+    .swiper-button-prev { left: -45px !important; }
 }
 
-/* En Celular las dejamos en el borde para que no se salgan de la pantalla */
 @media (max-width: 991px) {
-    .swiper-button-next { right: 0px !important; }
-    .swiper-button-prev { left: 0px !important; }
+    /* En celular las pegamos al borde pero visibles */
+    .swiper-button-next { right: -10px !important; }
+    .swiper-button-prev { left: -10px !important; }
 }
