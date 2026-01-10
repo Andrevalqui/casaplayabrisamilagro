@@ -7,14 +7,35 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <!-- Tu CSS (con ?v=3 para asegurar actualización) -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3">
-    <!-- Estilos del Carrusel -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=4">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <!-- Estilos para el efecto Lightbox (Abrir foto grande) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 </head>
-<body>
+<body data-bs-spy="scroll" data-bs-target="#navbar-menu">
+
+    <!-- 0. BARRA DE NAVEGACIÓN (MENÚ) -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(0, 0, 0, 0.7);">
+        <div class="container">
+            <a class="navbar-brand fw-bold" style="font-family: 'Playfair Display', serif;" href="#">{{ info.nombre }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#experiencia">Experiencia</a></li>
+                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#comodidades">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#espacios">Nuestros Espacios</a></li>
+                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#ubicacion">Ubicación</a></li>
+                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#testimonios">Opiniones</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="{{ ws_link }}" class="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-white">
+                            Reservar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <!-- 1. HERO (PORTADA) -->
     <header class="hero-section">
@@ -24,22 +45,22 @@
         <div class="content text-center text-white">
             <h1 class="display-1 fw-bold mb-3">{{ info.nombre }}</h1>
             <p class="h4 mb-4 fw-light">{{ info.ubicacion }}</p>
-            <a href="{{ ws_link }}" class="btn btn-marketing btn-lg mt-3">
-                <i class="fab fa-whatsapp"></i> Reservar Ahora
+            <a href="#experiencia" class="btn btn-marketing btn-lg mt-3">
+                <i class="fas fa-chevron-down"></i> Descubrir Más
             </a>
         </div>
         <div class="overlay"></div>
     </header>
 
-    <!-- 2. EXPERIENCIA -->
-    <section class="py-5 container text-center">
+    <!-- 2. EXPERIENCIA (ID AGREGADO) -->
+    <section id="experiencia" class="py-5 container text-center">
         <h2 class="section-title mt-4">La Experiencia</h2>
         <div class="divider mx-auto mb-4"></div>
         <p class="lead text-muted mx-auto" style="max-width: 800px; font-weight: 300;">{{ info.descripcion }}</p>
     </section>
 
-    <!-- 3. COMODIDADES -->
-    <section class="bg-light py-5">
+    <!-- 3. COMODIDADES (ID AGREGADO) -->
+    <section id="comodidades" class="bg-light py-5">
         <div class="container">
             <div class="row text-center g-4">
                 {% for servicio in servicios %}
@@ -54,8 +75,8 @@
         </div>
     </section>
 
-    <!-- 4. GALERÍA (CON EFECTO CLIC PARA ABRIR) -->
-    <section class="py-5">
+    <!-- 4. GALERÍA (ID AGREGADO) -->
+    <section id="espacios" class="py-5">
         <div class="container">
             <h2 class="section-title text-center">Nuestros Espacios</h2>
             <div class="divider mx-auto mb-5"></div>
@@ -65,7 +86,6 @@
                     {% for foto in galeria %}
                     <div class="swiper-slide">
                         <div class="photo-frame shadow-sm">
-                            <!-- ENVOLVEMOS LA FOTO EN UN LINK PARA QUE SE ABRA -->
                             <a href="{{ url_for('static', filename='img/' + foto) }}" class="glightbox">
                                 <img src="{{ url_for('static', filename='img/' + foto) }}" 
                                      class="img-fluid w-100" 
@@ -82,13 +102,12 @@
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </div>
-            <!-- Texto pequeño para indicar que se puede dar clic -->
             <p class="text-center text-muted mt-3 small"><i class="fas fa-search-plus"></i> Haz clic en las fotos para ampliarlas</p>
         </div>
     </section>
 
-    <!-- 5. UBICACIÓN (MAPA) -->
-    <section class="py-5 bg-light">
+    <!-- 5. UBICACIÓN (ID AGREGADO) -->
+    <section id="ubicacion" class="py-5 bg-light">
         <div class="container text-center">
             <h2 class="section-title">Ubicación Frente al Mar</h2>
             <div class="divider mx-auto mb-4"></div>
@@ -113,8 +132,8 @@
         </a>
     </section>
 
-    <!-- 7. TESTIMONIOS (AL FINAL) -->
-    <section class="py-5 bg-dark text-white">
+    <!-- 7. TESTIMONIOS (ID AGREGADO) -->
+    <section id="testimonios" class="py-5 bg-dark text-white">
         <div class="container text-center">
             <h2 class="mb-5">Lo que dicen nuestros huéspedes</h2>
             <div class="row justify-content-center">
@@ -135,12 +154,12 @@
     </section>
 
     <!-- SCRIPTS -->
+    <!-- Script de Bootstrap (IMPORTANTE PARA QUE EL MENÚ FUNCIONE EN CELULAR) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <!-- Script para abrir fotos grandes -->
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
 
     <script>
-        // Configuración del Carrusel
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 1,
             spaceBetween: 20,
@@ -153,7 +172,6 @@
             },
         });
 
-        // Configuración del Lightbox (Abrir fotos)
         const lightbox = GLightbox({
             touchNavigation: true,
             loop: true,
