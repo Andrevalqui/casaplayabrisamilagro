@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <!-- HERO -->
+    <!-- 1. HERO (PORTADA) -->
     <header class="hero-section">
         <video autoplay muted loop playsinline class="back-video">
             <source src="{{ url_for('static', filename='video/tour.mp4') }}" type="video/mp4">
@@ -27,14 +27,14 @@
         <div class="overlay"></div>
     </header>
 
-    <!-- EXPERIENCIA -->
+    <!-- 2. EXPERIENCIA -->
     <section class="py-5 container text-center">
         <h2 class="section-title mt-4">La Experiencia</h2>
         <div class="divider mx-auto mb-4"></div>
         <p class="lead text-muted mx-auto" style="max-width: 800px; font-weight: 300;">{{ info.descripcion }}</p>
     </section>
 
-    <!-- COMODIDADES -->
+    <!-- 3. COMODIDADES -->
     <section class="bg-light py-5">
         <div class="container">
             <div class="row text-center g-4">
@@ -50,10 +50,9 @@
         </div>
     </section>
 
-    <!-- GALERÍA (CARRUSEL) -->
+    <!-- 4. GALERÍA (FLECHAS ADENTRO) -->
     <section class="py-5">
-        <!-- AGREGADO px-5 PARA QUE LAS FLECHAS TENGAN ESPACIO -->
-        <div class="container px-5">
+        <div class="container">
             <h2 class="section-title text-center">Nuestros Espacios</h2>
             <div class="divider mx-auto mb-5"></div>
             
@@ -71,33 +70,16 @@
                     </div>
                     {% endfor %}
                 </div>
-                <div class="swiper-button-next text-gold"></div>
-                <div class="swiper-button-prev text-gold"></div>
+                <!-- Flechas -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </div>
         </div>
     </section>
 
-    <!-- TESTIMONIOS -->
-    <section class="py-5 bg-dark text-white">
-        <div class="container text-center">
-            <h2 class="mb-5">Lo que dicen nuestros huéspedes</h2>
-            <div class="row justify-content-center">
-                {% for review in reviews %}
-                <div class="col-md-4 mb-4">
-                    <div class="review-box p-4 border border-secondary rounded">
-                        <div class="stars mb-2 text-warning">★★★★★</div>
-                        <p class="fst-italic">"{{ review.comentario }}"</p>
-                        <small class="text-uppercase text-gold">{{ review.nombre }}</small>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-
-    <!-- UBICACIÓN (MAPA) -->
-    <section class="py-5">
+    <!-- 5. UBICACIÓN (MAPA) -->
+    <section class="py-5 bg-light">
         <div class="container text-center">
             <h2 class="section-title">Ubicación Privilegiada</h2>
             <div class="divider mx-auto mb-4"></div>
@@ -114,14 +96,37 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="text-center py-5 bg-gold text-white">
+    <!-- 6. LLAMADA A LA ACCIÓN (CTA) -->
+    <section class="text-center py-5 bg-gold text-white">
         <h3 class="mb-3">¿Te imaginas despertando aquí?</h3>
-        <a href="{{ ws_link }}" class="btn btn-light btn-lg rounded-pill px-5 shadow">
+        <a href="{{ ws_link }}" class="btn btn-light btn-lg rounded-pill px-5 shadow mt-2">
             Contactar al Anfitrión
         </a>
-    </footer>
+    </section>
 
+    <!-- 7. TESTIMONIOS (AL FINAL) -->
+    <section class="py-5 bg-dark text-white">
+        <div class="container text-center">
+            <h2 class="mb-5">Lo que dicen nuestros huéspedes</h2>
+            <div class="row justify-content-center">
+                {% for review in reviews %}
+                <div class="col-md-4 mb-4">
+                    <div class="review-box p-4 border border-secondary rounded h-100">
+                        <div class="stars mb-2 text-warning">★★★★★</div>
+                        <p class="fst-italic">"{{ review.comentario }}"</p>
+                        <small class="text-uppercase text-gold">{{ review.nombre }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Pequeño copyright al final -->
+            <div class="mt-5 text-muted small">
+                &copy; 2024 {{ info.nombre }}. Todos los derechos reservados.
+            </div>
+        </div>
+    </section>
+
+    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
