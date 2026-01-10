@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Estilos del Carrusel -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
 <body>
 
     <!-- PORTADA CON VIDEO DE FONDO -->
     <header class="hero-section">
-        <!-- El video se reproduce solo, sin sonido y en bucle -->
         <video autoplay muted loop playsinline class="back-video">
             <source src="{{ url_for('static', filename='video/tour.mp4') }}" type="video/mp4">
         </video>
@@ -29,7 +29,7 @@
         <div class="overlay"></div>
     </header>
 
-    <!-- DESCRIPCIÓN ELEGANTE -->
+    <!-- DESCRIPCIÓN -->
     <section class="py-5 container text-center">
         <h2 class="section-title mt-4">La Experiencia</h2>
         <div class="divider mx-auto mb-4"></div>
@@ -38,7 +38,7 @@
         </p>
     </section>
 
-    <!-- COMODIDADES (Iconos flotantes) -->
+    <!-- COMODIDADES -->
     <section class="bg-light py-5">
         <div class="container">
             <div class="row text-center g-4">
@@ -55,7 +55,7 @@
     </section>
 
     <!-- GALERÍA TIPO CARRUSEL (SLIDER) -->
-    <section class="py-5 bg-light">
+    <section class="py-5">
         <div class="container">
             <h2 class="section-title text-center">Nuestros Espacios</h2>
             <div class="divider mx-auto mb-5"></div>
@@ -66,10 +66,9 @@
                     {% for foto in galeria %}
                     <div class="swiper-slide">
                         <div class="photo-frame shadow-sm">
-                            <!-- Al dar clic, la imagen se abre en grande (opcional) -->
                             <img src="{{ url_for('static', filename='img/' + foto) }}" 
                                  class="img-fluid w-100" 
-                                 style="height: 350px; object-fit: cover; border-radius: 10px;" 
+                                 style="height: 400px; object-fit: cover; border-radius: 8px;" 
                                  loading="lazy"
                                  alt="Foto casa playa">
                         </div>
@@ -77,10 +76,9 @@
                     {% endfor %}
                 </div>
                 
-                <!-- Flechas de navegación -->
+                <!-- Flechas y Puntos -->
                 <div class="swiper-button-next text-gold"></div>
                 <div class="swiper-button-prev text-gold"></div>
-                <!-- Puntos de paginación abajo -->
                 <div class="swiper-pagination"></div>
             </div>
         </div>
@@ -104,22 +102,21 @@
         </div>
     </section>
 
-    <!-- BOTÓN FINAL -->
+    <!-- FOOTER -->
     <footer class="text-center py-5 bg-gold text-white">
         <h3 class="mb-3">¿Te imaginas despertando aquí?</h3>
         <a href="{{ ws_link }}" class="btn btn-light btn-lg rounded-pill px-5 shadow">
             Contactar al Anfitrión
         </a>
     </footer>
-<!-- Script del Carrusel (Swiper) -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- Configuración del Carrusel -->
+    <!-- SCRIPT DEL CARRUSEL -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 1,      // En celular muestra 1 foto
-            spaceBetween: 20,      // Espacio entre fotos
-            loop: true,            // Infinito (vuelve al inicio)
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
@@ -129,17 +126,10 @@
                 prevEl: ".swiper-button-prev",
             },
             breakpoints: {
-                640: {
-                    slidesPerView: 2, // En Tablet muestra 2 fotos
-                    spaceBetween: 20,
-                },
-                1024: {
-                    slidesPerView: 3, // En PC muestra 3 fotos
-                    spaceBetween: 30,
-                },
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 }
             },
         });
     </script>
-
 </body>
 </html>
