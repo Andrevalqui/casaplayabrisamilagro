@@ -220,4 +220,40 @@ html {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
+/* --- BOTÓN FLOTANTE WHATSAPP --- */
+.float-wa {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    z-index: 1000; /* Siempre encima de todo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s;
+}
+
+.float-wa:hover {
+    transform: scale(1.1); /* Crece un poco al pasar el mouse */
+    color: white;
+}
+
+/* Animación de pulso para llamar la atención */
+.float-wa {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+	0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+	70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+	100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
 
