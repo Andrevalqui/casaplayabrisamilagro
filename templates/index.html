@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ info.nombre }}</title>
+    <title>{{ info.nombre }} | Casa de Playa Exclusiva</title>
+    
+    <!-- METADATOS PARA WHATSAPP Y FACEBOOK (SEO) -->
+    <meta property="og:title" content="{{ info.nombre }} - Tu Refugio frente al Mar">
+    <meta property="og:description" content="Piscina privada, zona de parrilla y la mejor vista en Pacasmayo. Reserva tu experiencia inolvidable.">
+    <meta property="og:image" content="{{ url_for('static', filename='img/foto1.jpg', _external=True) }}">
+    <meta property="og:url" content="https://casaplayabrisamilagro.vercel.app">
+    <meta name="theme-color" content="#c5a47e">
+
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=5">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=6">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+    <!-- Librería de Animaciones (AOS) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar-menu">
 
@@ -42,7 +53,8 @@
         <video autoplay muted loop playsinline class="back-video">
             <source src="{{ url_for('static', filename='video/tour.mp4') }}" type="video/mp4">
         </video>
-        <div class="content text-center text-white">
+        <!-- Animación 'fade-up' añadida -->
+        <div class="content text-center text-white" data-aos="fade-up" data-aos-duration="1500">
             <h1 class="hero-title mb-0">{{ info.nombre }}</h1>
             <p class="hero-subtitle mb-4">{{ info.ubicacion }}</p>
             <a href="#experiencia" class="btn btn-marketing btn-lg mt-4">
@@ -54,9 +66,11 @@
 
     <!-- 2. EXPERIENCIA -->
     <section id="experiencia" class="py-5 container text-center">
-        <h2 class="section-title mt-4">La Experiencia</h2>
-        <div class="divider mx-auto mb-4"></div>
-        <p class="lead text-muted mx-auto" style="max-width: 800px; font-weight: 300;">{{ info.descripcion }}</p>
+        <div data-aos="fade-up">
+            <h2 class="section-title mt-4">La Experiencia</h2>
+            <div class="divider mx-auto mb-4"></div>
+            <p class="lead text-muted mx-auto" style="max-width: 800px; font-weight: 300;">{{ info.descripcion }}</p>
+        </div>
     </section>
 
     <!-- 3. COMODIDADES -->
@@ -64,7 +78,7 @@
         <div class="container">
             <div class="row text-center g-4">
                 {% for servicio in servicios %}
-                <div class="col-md-4 col-6">
+                <div class="col-md-4 col-6" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
                     <div class="service-card p-4 bg-white rounded shadow-sm h-100">
                         <i class="fas {{ servicio.icono }} fa-2x text-gold mb-3"></i>
                         <h6 class="text-uppercase ls-1">{{ servicio.nombre }}</h6>
@@ -77,7 +91,7 @@
 
     <!-- 4. GALERÍA -->
     <section id="espacios" class="py-5">
-        <div class="container">
+        <div class="container" data-aos="fade-in">
             <h2 class="section-title text-center">Nuestros Espacios</h2>
             <div class="divider mx-auto mb-5"></div>
             
@@ -105,25 +119,25 @@
         </div>
     </section>
 
-    <!-- 5. UBICACIÓN Y REDES SOCIALES -->
+    <!-- 5. UBICACIÓN Y REDES -->
     <section id="ubicacion" class="py-5 bg-light">
         <div class="container text-center">
-            <h2 class="section-title">Ubicación Frente al Mar</h2>
-            <div class="divider mx-auto mb-4"></div>
-            <p class="mb-4">A solo 20 minutos de la Plaza de Armas de Pacasmayo.</p>
+            <div data-aos="zoom-in">
+                <h2 class="section-title">Ubicación Frente al Mar</h2>
+                <div class="divider mx-auto mb-4"></div>
+                <p class="mb-4">A solo 20 minutos de la Plaza de Armas de Pacasmayo.</p>
+                
+                <div class="ratio ratio-21x9 shadow-lg rounded mb-4 border border-2 mx-auto" style="max-width: 900px;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.568466657864!2d-79.5783845856866!3d-7.455301594619717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjcnMTkuMSJTIDc5wrAzNCczNC4zIlc!5e0!3m2!1ses!2spe!4v1645000000000!5m2!1ses!2spe" 
+                            style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
 
-            <div class="ratio ratio-21x9 shadow-lg rounded mb-4 border border-2 mx-auto" style="max-width: 900px;">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.568466657864!2d-79.5783845856866!3d-7.455301594619717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjcnMTkuMSJTIDc5wrAzNCczNC4zIlc!5e0!3m2!1ses!2spe!4v1645000000000!5m2!1ses!2spe" 
-                        style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <a href="{{ info.mapa_link }}" target="_blank" class="btn btn-outline-dark btn-lg rounded-pill px-4 mb-5">
+                    <i class="fas fa-map-marked-alt me-2"></i> Ver ruta en Google Maps
+                </a>
             </div>
 
-            <!-- Botón Mapa -->
-            <a href="{{ info.mapa_link }}" target="_blank" class="btn btn-outline-dark btn-lg rounded-pill px-4 mb-5">
-                <i class="fas fa-map-marked-alt me-2"></i> Ver ruta en Google Maps
-            </a>
-
-            <!-- NUEVA SECCIÓN: REDES SOCIALES -->
-            <div class="mt-4">
+            <div class="mt-4" data-aos="fade-up">
                 <h4 class="mb-4" style="font-family: 'Great Vibes', cursive; font-size: 2.5rem;">Síguenos</h4>
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
                     <a href="{{ info.instagram }}" target="_blank" class="btn btn-instagram">
@@ -134,25 +148,26 @@
                     </a>
                 </div>
             </div>
-
         </div>
     </section>
 
     <!-- 6. CTA -->
     <section class="text-center py-5 bg-gold text-white">
-        <h3 class="mb-3">¿Te imaginas despertando aquí?</h3>
-        <a href="{{ ws_link }}" class="btn btn-light btn-lg rounded-pill px-5 shadow mt-2">
-            No dudes en Contactarnos
-        </a>
+        <div data-aos="flip-up">
+            <h3 class="mb-3">¿Te imaginas despertando aquí?</h3>
+            <a href="{{ ws_link }}" class="btn btn-light btn-lg rounded-pill px-5 shadow mt-2">
+                No dudes en Contactarnos
+            </a>
+        </div>
     </section>
 
-    <!-- 7. TESTIMONIOS Y COPYRIGHT CORREGIDO -->
+    <!-- 7. TESTIMONIOS -->
     <section id="testimonios" class="py-5 bg-dark text-white">
         <div class="container text-center">
-            <h2 class="mb-5">Lo que dicen nuestros huéspedes</h2>
+            <h2 class="mb-5" data-aos="fade-down">Lo que dicen nuestros huéspedes</h2>
             <div class="row justify-content-center">
                 {% for review in reviews %}
-                <div class="col-md-4 mb-4">
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ loop.index * 150 }}">
                     <div class="review-box p-4 border border-secondary rounded h-100">
                         <div class="stars mb-2 text-warning">★★★★★</div>
                         <p class="fst-italic">"{{ review.comentario }}"</p>
@@ -162,19 +177,31 @@
                 {% endfor %}
             </div>
             
-            <!-- COPYRIGHT BLANCO -->
             <div class="mt-5 text-white small opacity-75">
                 &copy; {{ anio }} Derechos Reservados por la Empresa.
             </div>
         </div>
     </section>
 
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+    <a href="{{ ws_link }}" class="float-wa" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+    <!-- Script de Animaciones (AOS) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
+        // Inicializar Animaciones
+        AOS.init({
+            duration: 1000, // Duración de la animación (ms)
+            once: true      // Animar solo la primera vez que bajan
+        });
+
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 1,
             spaceBetween: 20,
