@@ -27,7 +27,7 @@ SERVICIOS = [
     {"icono": "fa-bed", "nombre": "1 Habitación"},
     {"icono": "fa-bath", "nombre": "2 Baños"},
     {"icono": "fa-car", "nombre": "Estacionamiento Seguro"},
-    {"icono": "fa-users", "nombre": "Capacidad 25 Personas"},
+    {"icono": "fa-users", "nombre": "Capacidad 50 Personas"},
 ]
 
 TESTIMONIOS = [
@@ -58,3 +58,4 @@ def home():
 
 if __name__ == '__main__':
     app.run()
+
