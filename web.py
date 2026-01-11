@@ -1,4 +1,5 @@
 import os
+from datetime import datetime # <--- 1. IMPORTANTE: Agregamos esta línea arriba
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -7,13 +8,14 @@ app = Flask(__name__)
 CASA_INFO = {
     "nombre": "Brisa Milagro",
     "ubicacion": "Balneario El Milagro, Pacasmayo",
-    "descripcion": "Un refugio exclusivo frente al mar...",
+    "descripcion": "Un refugio exclusivo frente al mar...", # Tu descripción larga aquí
     "precio": "Consultar Vía WhatsApp",
     "whatsapp": "987654321",
-    "mapa_link": "https://www.google.com/maps/dir/Plaza+de+Armas+de+Pacasmayo,+Calle+Manco+C%C3%A1pac,+Pacasmayo/-7.4553016,-79.5761959/@-7.4238644,-79.5677181,14z/data=!4m9!4m8!1m5!1m1!1s0x904d46080fc459e5:0xfb2f4f890f3a7d06!2m2!1d-79.5722674!2d-7.40112!1m0!3e0?entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoASAFQAw%3D%3D" # Tu enlace largo
+    "mapa_link": "https://www.google.com/maps/dir/..." # Tu link largo aquí
 }
 
 SERVICIOS = [
+    # ... (Tus servicios igual que antes) ...
     {"icono": "fa-wifi", "nombre": "WiFi Alta Velocidad"},
     {"icono": "fa-water", "nombre": "Piscina Privada"},
     {"icono": "fa-snowflake", "nombre": "Aire Acondicionado"},
@@ -23,36 +25,34 @@ SERVICIOS = [
 ]
 
 TESTIMONIOS = [
-    {"nombre": "Carlos R.", "comentario": "La vista es impagable. La casa estaba impecable y la atención fue de primera."},
-    {"nombre": "Ana M.", "comentario": "El mejor fin de semana en años. La piscina es tal cual las fotos."},
-    {"nombre": "Grupo Familia Pérez", "comentario": "Excelente para ir con niños, muy seguro y cómodo."}
+    # ... (Tus testimonios igual que antes) ...
+    {"nombre": "Carlos R.", "comentario": "La vista es impagable..."},
+    {"nombre": "Ana M.", "comentario": "El mejor fin de semana..."},
+    {"nombre": "Grupo Familia Pérez", "comentario": "Excelente para ir con niños..."}
 ]
 
 @app.route('/')
 def home():
-    # --- LOGICA AUTOMATICA DE IMAGENES ---
-    # Ruta a la carpeta de imágenes
+    # --- LOGICA IMAGENES ---
     carpeta_img = os.path.join(app.root_path, 'static', 'img')
-    
-    # Obtenemos todos los archivos de esa carpeta
     archivos = os.listdir(carpeta_img)
-    
-    # Filtramos solo las imágenes (ignoramos archivos ocultos u otros)
     ext_validas = ('.jpg', '.jpeg', '.png', '.webp')
     galeria = [img for img in archivos if img.lower().endswith(ext_validas)]
     
-    # Creamos el link de WhatsApp
+    # --- LOGICA WHATSAPP ---
     mensaje = f"Hola, vi la web de {CASA_INFO['nombre']} y quisiera información."
     ws_link = f"https://wa.me/{CASA_INFO['whatsapp']}?text={mensaje.replace(' ', '%20')}"
+    
+    # --- LOGICA AÑO AUTOMATICO ---
+    anio_actual = datetime.now().year # <--- 2. Python calcula el año aquí
     
     return render_template('index.html', 
                            info=CASA_INFO, 
                            servicios=SERVICIOS, 
                            reviews=TESTIMONIOS, 
-                           galeria=galeria, # Pasamos la lista automática
-                           ws_link=ws_link)
+                           galeria=galeria,
+                           ws_link=ws_link,
+                           anio=anio_actual) # <--- 3. Se lo enviamos al HTML
 
 if __name__ == '__main__':
-
     app.run()
-
