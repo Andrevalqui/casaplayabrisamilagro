@@ -15,6 +15,105 @@ h1, h2, h3 {
     font-family: var(--font-heading);
 }
 
+/* =========================================
+   1. SPLASH SCREEN (PANTALLA DE CARGA)
+   ========================================= */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #1a1a1a; /* Negro elegante */
+    z-index: 9999; /* Encima de todo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease-out, visibility 1s ease-out;
+}
+
+.splash-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Títulos del Splash */
+.splash-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 5rem;
+    color: var(--color-gold);
+    margin-bottom: 0;
+    animation: fadeInUp 1.5s ease;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.splash-subtitle {
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    animation: fadeInDown 1.5s ease;
+    text-align: center;
+}
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* =========================================
+   2. BARRA FLOTANTE DE REDES (SIDEBAR)
+   ========================================= */
+.social-sidebar {
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column-reverse; /* WhatsApp abajo, los otros arriba */
+    gap: 15px;
+    z-index: 1000;
+}
+
+.social-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+}
+
+.social-btn:hover {
+    transform: scale(1.1);
+    color: white;
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+
+/* Colores específicos de la barra lateral */
+.float-wa { 
+    background-color: #25d366; 
+    animation: pulse 2s infinite; 
+}
+.float-ig { background: linear-gradient(45deg, #f09433, #cc2366, #bc1888); }
+.float-fb { background-color: #1877F2; }
+
+@keyframes pulse {
+	0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+	70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+	100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* =========================================
+   3. ESTILOS GENERALES
+   ========================================= */
+
 /* PORTADA CON VIDEO (HERO) */
 .hero-section {
     position: relative;
@@ -48,7 +147,33 @@ h1, h2, h3 {
     position: relative;
 }
 
-/* BOTONES DE MARKETING */
+/* ESTILOS DE LUJO PARA EL TÍTULO HERO */
+.hero-title {
+    font-family: 'Great Vibes', cursive; /* Letra manuscrita */
+    font-size: 6rem; /* Muy grande */
+    font-weight: 400;
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.6); 
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    text-transform: uppercase; 
+    letter-spacing: 6px; 
+    font-weight: 300; 
+    text-shadow: 1px 1px 10px rgba(0,0,0,0.8);
+    margin-top: 10px;
+}
+
+/* Ajuste para celulares */
+@media (max-width: 768px) {
+    .hero-title { font-size: 4rem; }
+    .hero-subtitle { font-size: 0.9rem; letter-spacing: 3px; }
+    .splash-title { font-size: 3.5rem; } /* Ajuste Splash en movil */
+}
+
+/* BOTONES DE MARKETING (Página) */
 .btn-marketing {
     background-color: var(--color-gold);
     color: white;
@@ -94,6 +219,10 @@ h1, h2, h3 {
     overflow: hidden;
     border-radius: 8px;
 }
+.photo-frame a {
+    cursor: zoom-in; 
+    display: block;  
+}
 .photo-frame img {
     transition: transform 0.5s ease;
 }
@@ -101,34 +230,26 @@ h1, h2, h3 {
     transform: scale(1.1); 
 }
 
-/* --- AQUÍ ESTÁ LA MAGIA DE LAS FLECHAS --- */
-
+/* ESTILOS DEL CARRUSEL SWIPER */
 .swiper {
     width: 100%;
-    padding-bottom: 40px; /* Espacio para los puntitos abajo */
+    padding-bottom: 40px; 
 }
 
 .swiper-button-next, .swiper-button-prev {
     color: var(--color-gold) !important;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco */
+    background-color: rgba(255, 255, 255, 0.9);
     width: 45px;
     height: 45px;
     border-radius: 50%;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     transition: all 0.3s ease;
-    z-index: 10; /* Asegura que floten encima */
+    z-index: 10;
 }
 
-/* ESTAS DOS LINEAS PONEN LAS FLECHAS ADENTRO */
-.swiper-button-next { 
-    right: 15px !important; 
-}
+.swiper-button-next { right: 15px !important; }
+.swiper-button-prev { left: 15px !important; }
 
-.swiper-button-prev { 
-    left: 15px !important; 
-}
-
-/* Efecto al pasar el mouse */
 .swiper-button-next:hover, .swiper-button-prev:hover {
     background-color: var(--color-gold);
     color: white !important;
@@ -144,58 +265,7 @@ h1, h2, h3 {
     background-color: var(--color-gold) !important;
 }
 
-/* CURSOR PARA GALERÍA */
-.photo-frame a {
-    cursor: zoom-in; /* Muestra una lupa al pasar el mouse */
-    display: block;  /* Asegura que ocupe todo el espacio */
-}
-
-/* --- NAVEGACIÓN SUAVE --- */
-html {
-    scroll-behavior: smooth; /* Hace que baje deslizándose, no de golpe */
-    scroll-padding-top: 80px; /* Para que la barra de arriba no tape el título al bajar */
-}
-
-/* Ajuste para que la barra de menú se vea bien sobre el video */
-.navbar {
-    backdrop-filter: blur(10px); /* Efecto vidrio borroso moderno */
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-/* --- ESTILOS DE LUJO PARA EL TÍTULO --- */
-
-/* 1. El nombre de la casa (Estilo Firma) */
-.hero-title {
-    font-family: 'Great Vibes', cursive; /* Letra manuscrita */
-    font-size: 6rem; /* Muy grande */
-    font-weight: 400;
-    text-shadow: 2px 2px 15px rgba(0,0,0,0.6); /* Sombra para que se lea sobre el video */
-    line-height: 1.2;
-}
-
-/* 2. La ubicación (Estilo Minimalista) */
-.hero-subtitle {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1rem;
-    text-transform: uppercase; /* Todo mayúsculas */
-    letter-spacing: 6px; /* Letras muy separadas (Efecto Lujo) */
-    font-weight: 300; /* Letra fina */
-    text-shadow: 1px 1px 10px rgba(0,0,0,0.8);
-    margin-top: 10px;
-}
-
-/* Ajuste para celulares (para que no se vea gigante) */
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 4rem; /* Un poco más pequeño en celular */
-    }
-    .hero-subtitle {
-        font-size: 0.9rem;
-        letter-spacing: 3px; /* Menos separación en celular */
-    }
-}
-
-/* --- BOTONES REDES SOCIALES --- */
+/* BOTONES REDES SOCIALES (SECCION CONTACTO) */
 .btn-instagram {
     background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     color: white !important;
@@ -220,40 +290,15 @@ html {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
-/* --- BOTÓN FLOTANTE WHATSAPP --- */
-.float-wa {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 30px;
-    right: 30px;
-    background-color: #25d366;
-    color: #FFF;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 30px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    z-index: 1000; /* Siempre encima de todo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s;
+
+/* NAVEGACIÓN SUAVE */
+html {
+    scroll-behavior: smooth; 
+    scroll-padding-top: 80px; 
 }
 
-.float-wa:hover {
-    transform: scale(1.1); /* Crece un poco al pasar el mouse */
-    color: white;
+.navbar {
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
-
-/* Animación de pulso para llamar la atención */
-.float-wa {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-	0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-	70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-	100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-}
-
-
