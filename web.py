@@ -17,14 +17,14 @@ CASA_INFO = {
 
 # --- LISTA DE SERVICIOS ACTUALIZADA (NUEVOS ÍCONOS Y TEXTOS) ---
 SERVICIOS = [
-    {"icono": "fa-utensils", "nombre": "Área de Comedor"},      # Antes WiFi
-    {"icono": "fa-music", "nombre": "Área de Baile"},           # Antes Aire Acondicionado
+    {"icono": "fa-utensils", "nombre": "Área de Comedor"},
+    {"icono": "fa-music", "nombre": "Área de Baile"},
     {"icono": "fa-water", "nombre": "Piscina Privada"},
     {"icono": "fa-fire", "nombre": "Zona de Parrilla"},
-    {"icono": "fa-bed", "nombre": "1 Habitación"},              # Nuevo
-    {"icono": "fa-bath", "nombre": "2 Baños"},                  # Nuevo
+    {"icono": "fa-bed", "nombre": "1 Habitación"},
+    {"icono": "fa-bath", "nombre": "2 Baños"},
     {"icono": "fa-car", "nombre": "Estacionamiento Seguro"},
-    {"icono": "fa-users", "nombre": "Capacidad 25 Personas"},   # Actualizado a 25
+    {"icono": "fa-users", "nombre": "Capacidad 50 Personas"},
 ]
 
 TESTIMONIOS = [
@@ -58,3 +58,4 @@ def home():
 
 if __name__ == '__main__':
     app.run()
+
