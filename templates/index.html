@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ info.nombre }} | Casa de Playa Exclusiva</title>
     
-    <!-- METADATOS PARA WHATSAPP Y FACEBOOK (SEO) -->
+    <!-- METADATOS -->
     <meta property="og:title" content="{{ info.nombre }} - Tu Refugio frente al Mar">
     <meta property="og:description" content="Piscina privada, zona de parrilla y la mejor vista en Pacasmayo. Reserva tu experiencia inolvidable.">
     <meta property="og:image" content="{{ url_for('static', filename='img/foto1.jpg', _external=True) }}">
@@ -16,13 +16,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=6">
+    <!-- Versión nueva para forzar actualización -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-    <!-- Librería de Animaciones (AOS) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar-menu">
+
+    <!-- === SPLASH SCREEN (PANTALLA DE CARGA) === -->
+    <div class="splash-screen" id="splash">
+        <p class="splash-welcome">BIENVENIDOS A LA CASA DE PLAYA</p>
+        <h1 class="splash-title">{{ info.nombre }}</h1>
+        <p class="splash-subtitle">{{ info.ubicacion }}</p>
+    </div>
 
     <!-- 0. MENÚ -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(0, 0, 0, 0.7);">
@@ -53,7 +60,6 @@
         <video autoplay muted loop playsinline class="back-video">
             <source src="{{ url_for('static', filename='video/tour.mp4') }}" type="video/mp4">
         </video>
-        <!-- Animación 'fade-up' añadida -->
         <div class="content text-center text-white" data-aos="fade-up" data-aos-duration="1500">
             <h1 class="hero-title mb-0">{{ info.nombre }}</h1>
             <p class="hero-subtitle mb-4">{{ info.ubicacion }}</p>
@@ -137,6 +143,7 @@
                 </a>
             </div>
 
+            <!-- Botones Redes en Sección -->
             <div class="mt-4" data-aos="fade-up">
                 <h4 class="mb-4" style="font-family: 'Great Vibes', cursive; font-size: 2.5rem;">Síguenos</h4>
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -183,25 +190,42 @@
         </div>
     </section>
 
-    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
-    <a href="{{ ws_link }}" class="float-wa" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <!-- === BARRA LATERAL FLOTANTE (REDES) === -->
+    <div class="social-sidebar">
+        <!-- WhatsApp (Abajo) -->
+        <a href="{{ ws_link }}" class="social-btn float-wa" target="_blank" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <!-- Instagram (En medio) -->
+        <a href="{{ info.instagram }}" class="social-btn float-ig" target="_blank" title="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <!-- Facebook (Arriba) -->
+        <a href="{{ info.facebook }}" class="social-btn float-fb" target="_blank" title="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+    </div>
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
-    <!-- Script de Animaciones (AOS) -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
-        // Inicializar Animaciones
-        AOS.init({
-            duration: 1000, // Duración de la animación (ms)
-            once: true      // Animar solo la primera vez que bajan
+        // 1. Lógica del Splash Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                splash.classList.add('splash-hidden');
+                setTimeout(() => { splash.style.display = 'none'; }, 1000);
+            }, 2500); // 2.5 segundos de espera
         });
 
+        // 2. Animaciones Scroll
+        AOS.init({ duration: 1000, once: true });
+
+        // 3. Carrusel
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 1,
             spaceBetween: 20,
@@ -214,6 +238,7 @@
             },
         });
 
+        // 4. Lightbox
         const lightbox = GLightbox({
             touchNavigation: true,
             loop: true,
