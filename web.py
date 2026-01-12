@@ -27,7 +27,7 @@ SERVICIOS = [
     {"icono": "fa-bed", "nombre": "1 Habitación"},
     {"icono": "fa-bath", "nombre": "2 Baños"},
     {"icono": "fa-car", "nombre": "Estacionamiento Seguro"},
-    {"icono": "fa-users", "nombre": "Capacidad 50 Personas"},
+    {"icono": "fa-users", "nombre": "Capacidad 50 Personas"}, # Mantenido en 50
 ]
 
 TESTIMONIOS = [
@@ -38,10 +38,16 @@ TESTIMONIOS = [
 
 @app.route('/')
 def home():
+    # Asegúrate de tener la carpeta 'static/img' creada localmente
     carpeta_img = os.path.join(app.root_path, 'static', 'img')
-    archivos = os.listdir(carpeta_img)
-    ext_validas = ('.jpg', '.jpeg', '.png', '.webp')
-    galeria = [img for img in archivos if img.lower().endswith(ext_validas)]
+    
+    # Validación simple por si ejecutas sin la carpeta creada
+    if os.path.exists(carpeta_img):
+        archivos = os.listdir(carpeta_img)
+        ext_validas = ('.jpg', '.jpeg', '.png', '.webp')
+        galeria = [img for img in archivos if img.lower().endswith(ext_validas)]
+    else:
+        galeria = [] # Lista vacía si no hay carpeta
     
     mensaje = f"Hola, vi la web de {CASA_INFO['nombre']} y quisiera información."
     ws_link = f"https://wa.me/{CASA_INFO['whatsapp']}?text={mensaje.replace(' ', '%20')}"
@@ -57,5 +63,4 @@ def home():
                            anio=anio_actual)
 
 if __name__ == '__main__':
-    app.run()
-
+    app.run(debug=True)
