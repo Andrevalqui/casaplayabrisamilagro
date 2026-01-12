@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -12,12 +12,10 @@ CASA_INFO = {
     "precio": "Consultar Vía WhatsApp",
     "whatsapp": "997317288",
     "mapa_link": "https://www.google.com/maps/dir/Plaza+de+Armas+de+Pacasmayo,+Calle+Manco+C%C3%A1pac,+Pacasmayo/-7.4553016,-79.5761959/@-7.4238644,-79.5677181,14z/data=!4m9!4m8!1m5!1m1!1s0x904d46080fc459e5:0xfb2f4f890f3a7d06!2m2!1d-79.5722674!2d-7.40112!1m0!3e0?entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoASAFQAw%3D%3D",
-    # REDES SOCIALES
     "instagram": "https://www.instagram.com/casa.brisaelmilagro/",
     "facebook": "https://www.facebook.com/people/Casa-de-playa-Brisa-El-Milagro/61586554494381/?mibextid=wwXIfr&rdid=LauYjsGBeXeunVXp&share_url=https%253A%252F%252Fwww.facebook.com%252Fshare%252F1Coy6aLzqM%252F%253Fmibextid%253DwwXIfr"
 }
 
-# --- LISTA DE SERVICIOS ---
 SERVICIOS = [
     {"icono": "fa-utensils", "nombre": "Área de Comedor"},
     {"icono": "fa-music", "nombre": "Área de Baile"},
@@ -27,7 +25,7 @@ SERVICIOS = [
     {"icono": "fa-bed", "nombre": "1 Habitación"},
     {"icono": "fa-bath", "nombre": "3 Baños"},
     {"icono": "fa-car", "nombre": "Estacionamiento Seguro"},
-    {"icono": "fa-users", "nombre": "Capacidad 50 Personas"}, # Mantenido en 50
+    {"icono": "fa-users", "nombre": "Capacidad 50 Personas"},
 ]
 
 TESTIMONIOS = [
@@ -36,19 +34,25 @@ TESTIMONIOS = [
     {"nombre": "Grupo Familia Pérez", "comentario": "Excelente para ir con niños, muy seguro y cómodo."}
 ]
 
+# Función auxiliar para guardar datos en un archivo (Simulación de base de datos)
+def guardar_registro(tipo, datos):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    linea = f"[{timestamp}] {tipo.upper()}: {datos}\n"
+    # Esto creará un archivo 'registros.txt' en tu carpeta del proyecto
+    with open("registros.txt", "a", encoding="utf-8") as f:
+        f.write(linea)
+
 @app.route('/')
 def home():
-    # Asegúrate de tener la carpeta 'static/img' creada localmente
     carpeta_img = os.path.join(app.root_path, 'static', 'img')
-    
-    # Validación simple por si ejecutas sin la carpeta creada
     if os.path.exists(carpeta_img):
         archivos = os.listdir(carpeta_img)
         ext_validas = ('.jpg', '.jpeg', '.png', '.webp')
         galeria = [img for img in archivos if img.lower().endswith(ext_validas)]
     else:
-        galeria = [] # Lista vacía si no hay carpeta
+        galeria = []
     
+    # Mantenemos el link de WS solo para el botón flotante
     mensaje = f"Hola, vi la web de {CASA_INFO['nombre']} y quisiera información."
     ws_link = f"https://wa.me/{CASA_INFO['whatsapp']}?text={mensaje.replace(' ', '%20')}"
     
@@ -61,6 +65,29 @@ def home():
                            galeria=galeria,
                            ws_link=ws_link,
                            anio=anio_actual)
+
+# --- NUEVA RUTA PARA PROCESAR RESERVA ---
+@app.route('/api/reserva', methods=['POST'])
+def procesar_reserva():
+    data = request.json
+    # Aquí es donde el sistema "gestiona internamente"
+    # Guardamos los datos en un archivo de texto
+    guardar_registro("RESERVA", data)
+    print("Nueva reserva recibida:", data) 
+    
+    # NOTA: Para enviar un WhatsApp REAL desde el servidor automáticamente, 
+    # se necesitaría una API pagada como Twilio. Por ahora, lo guardamos.
+    
+    return jsonify({"status": "success", "message": "Reserva recibida"})
+
+# --- NUEVA RUTA PARA PROCESAR OPINIÓN ---
+@app.route('/api/opinion', methods=['POST'])
+def procesar_opinion():
+    data = request.json
+    guardar_registro("OPINION", data)
+    print("Nueva opinión recibida:", data)
+    
+    return jsonify({"status": "success", "message": "Opinión recibida"})
 
 if __name__ == '__main__':
     app.run(debug=True)
