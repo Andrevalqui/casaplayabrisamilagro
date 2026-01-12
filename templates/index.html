@@ -8,7 +8,7 @@
     <!-- METADATOS -->
     <meta property="og:title" content="{{ info.nombre }} - Tu Refugio frente al Mar">
     <meta property="og:description" content="Piscina privada, zona de parrilla y la mejor vista en Pacasmayo. Reserva tu experiencia inolvidable.">
-    <!-- Asegúrate de tener foto1.jpg en static/img/ -->
+    <!-- Asegúrate de tener foto1.jpg en static/img/ para que esto funcione -->
     <meta property="og:image" content="{{ url_for('static', filename='img/foto1.jpg', _external=True) }}">
     <meta property="og:url" content="https://casaplayabrisamilagro.vercel.app">
     <meta name="theme-color" content="#c5a47e">
@@ -17,15 +17,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
-    <!-- Versión actualizada a v=9 para asegurar cambios -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=9">
+    <!-- Versión v=11 para asegurar cambios -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=11">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar-menu">
 
-    <!-- === SPLASH SCREEN (PANTALLA DE CARGA MEJORADA) === -->
+    <!-- === SPLASH SCREEN === -->
     <div class="splash-screen" id="splash">
         <p class="splash-welcome" style="color: white; letter-spacing: 4px; font-weight: 300;">BIENVENIDOS A</p>
         <h1 class="splash-title">{{ info.nombre }}</h1>
@@ -33,7 +33,7 @@
     </div>
 
     <!-- 0. MENÚ -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(0, 0, 0, 0.7);">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(0, 0, 0, 0.85);">
         <div class="container">
             <a class="navbar-brand fw-bold" style="font-family: 'Playfair Display', serif;" href="#">{{ info.nombre }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -43,14 +43,11 @@
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#experiencia">Experiencia</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#comodidades">Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#espacios">Nuestros Espacios</a></li>
-                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#ubicacion">Ubicación</a></li>
+                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#espacios">Espacios</a></li>
+                    <!-- Enlaces nuevos -->
+                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#reserva">Haz tu Reserva</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#testimonios">Opiniones</a></li>
-                    <li class="nav-item ms-lg-3">
-                        <a href="{{ ws_link }}" class="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-white">
-                            Reservar
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#comentarios">Déjanos tu Comentario</a></li>
                 </ul>
             </div>
         </div>
@@ -126,7 +123,84 @@
         </div>
     </section>
 
-    <!-- 5. UBICACIÓN Y REDES -->
+    <!-- === NUEVO: SECCIÓN DE RESERVA === -->
+    <section id="reserva" class="py-5 bg-gold text-white">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-title text-white">Haz tu Reserva</h2>
+                <div class="divider bg-white mx-auto mb-3"></div>
+                <p>Completa el formulario y te enviaremos la cotización a tu WhatsApp.</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="zoom-in">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-5 text-dark">
+                            <form id="formReserva">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small">Nombre(s) *</label>
+                                        <input type="text" class="form-control" id="res_nombre" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small">Apellidos *</label>
+                                        <input type="text" class="form-control" id="res_apellido" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small">Celular (Llamadas) *</label>
+                                        <input type="tel" class="form-control" id="res_celular" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small">WhatsApp (Opcional)</label>
+                                        <input type="tel" class="form-control" id="res_whatsapp">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-bold small">Correo Electrónico (Opcional)</label>
+                                        <input type="email" class="form-control" id="res_email">
+                                    </div>
+
+                                    <div class="col-12"><hr class="my-2"></div>
+                                    
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small">Fecha estimada de llegada</label>
+                                        <input type="date" class="form-control" id="res_fecha">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small">Días de hospedaje *</label>
+                                        <select class="form-select" id="res_dias" required>
+                                            <option value="" selected>Seleccione...</option>
+                                            <option value="1 Día (Full Day)">1 Día (Full Day)</option>
+                                            <option value="2 Días / 1 Noche">2 Días / 1 Noche</option>
+                                            <option value="3 Días / 2 Noches">3 Días / 2 Noches</option>
+                                            <option value="Semana Completa">Semana Completa</option>
+                                            <option value="Otro">Otro (Especificar)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small">Cantidad de Adultos</label>
+                                        <input type="number" class="form-control" id="res_adultos" min="1" value="1">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold small">Cantidad de Niños</label>
+                                        <input type="number" class="form-control" id="res_ninos" min="0" value="0">
+                                    </div>
+                                    
+                                    <div class="col-12 text-center mt-4">
+                                        <button type="button" class="btn btn-dark btn-lg px-5 rounded-pill" onclick="enviarReserva()">
+                                            <i class="fab fa-whatsapp me-2"></i> Enviar Solicitud
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. UBICACIÓN -->
     <section id="ubicacion" class="py-5 bg-light">
         <div class="container text-center">
             <div data-aos="zoom-in">
@@ -144,7 +218,7 @@
                 </a>
             </div>
 
-            <!-- Botones Redes en Sección (Aquí si puedes dejar todas las que gustes) -->
+            <!-- Botones Redes en Sección -->
             <div class="mt-4" data-aos="fade-up">
                 <h4 class="mb-4" style="font-family: 'Great Vibes', cursive; font-size: 2.5rem;">Síguenos</h4>
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -156,16 +230,6 @@
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- 6. CTA -->
-    <section class="text-center py-5 bg-gold text-white">
-        <div data-aos="flip-up">
-            <h3 class="mb-3">¿Te imaginas despertando aquí?</h3>
-            <a href="{{ ws_link }}" class="btn btn-light btn-lg rounded-pill px-5 shadow mt-2">
-                No dudes en Contactarnos
-            </a>
         </div>
     </section>
 
@@ -184,25 +248,57 @@
                 </div>
                 {% endfor %}
             </div>
+        </div>
+    </section>
+
+    <!-- === NUEVO: SECCIÓN DÉJANOS TU COMENTARIO === -->
+    <section id="comentarios" class="py-5 bg-light">
+        <div class="container text-center" data-aos="fade-up">
+            <h3 class="section-title mb-4">Déjanos tu Comentario</h3>
+            <div class="divider mx-auto mb-4"></div>
+            <p class="mb-4 text-muted">Tu opinión nos ayuda a mejorar. Envíanos tu reseña por WhatsApp.</p>
             
-            <div class="mt-5 text-white small opacity-75">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm p-4">
+                        <form id="formOpinion">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="opi_nombre" placeholder="Tu Nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" id="opi_puntuacion">
+                                    <option value="5">★★★★★ - Excelente</option>
+                                    <option value="4">★★★★☆ - Muy Bueno</option>
+                                    <option value="3">★★★☆☆ - Bueno</option>
+                                    <option value="2">★★☆☆☆ - Regular</option>
+                                    <option value="1">★☆☆☆☆ - Malo</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" id="opi_mensaje" rows="3" placeholder="Cuéntanos tu experiencia..." required></textarea>
+                            </div>
+                            <button type="button" class="btn btn-outline-dark rounded-pill px-4" onclick="enviarOpinion()">
+                                <i class="fas fa-paper-plane me-2"></i> Enviar Opinión
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5 text-dark small opacity-75">
                 &copy; {{ anio }} Derechos Reservados por la Empresa.
             </div>
         </div>
     </section>
 
     <!-- === BARRA LATERAL FLOTANTE (REDES) === -->
-    <!-- Botones de seguimiento (Follow) - Sin TikTok, solo lo esencial -->
     <div class="social-sidebar">
-        <!-- WhatsApp (Abajo) -->
         <a href="{{ ws_link }}" class="social-btn float-wa" target="_blank" title="WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
-        <!-- Instagram (En medio) -->
         <a href="{{ info.instagram }}" class="social-btn float-ig" target="_blank" title="Instagram">
             <i class="fab fa-instagram"></i>
         </a>
-        <!-- Facebook (Arriba) -->
         <a href="{{ info.facebook }}" class="social-btn float-fb" target="_blank" title="Facebook">
             <i class="fab fa-facebook-f"></i>
         </a>
@@ -215,37 +311,85 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
-        // 1. Lógica del Splash Screen
+        // 1. Splash Screen
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash');
                 splash.classList.add('splash-hidden');
                 setTimeout(() => { splash.style.display = 'none'; }, 1000);
-            }, 2500); // 2.5 segundos de espera
+            }, 2500);
         });
 
-        // 2. Animaciones Scroll
+        // 2. Animaciones
         AOS.init({ duration: 1000, once: true });
 
-        // 3. Carrusel
+        // 3. Swiper
         var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            loop: true,
+            slidesPerView: 1, spaceBetween: 20, loop: true,
             pagination: { el: ".swiper-pagination", clickable: true },
             navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            breakpoints: {
-                640: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 }
-            },
+            breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
         });
 
         // 4. Lightbox
-        const lightbox = GLightbox({
-            touchNavigation: true,
-            loop: true,
-            autoplayVideos: true
-        });
+        const lightbox = GLightbox({ touchNavigation: true, loop: true, autoplayVideos: true });
+
+        // === 5. FUNCIONES DE ENVÍO WHATSAPP ===
+        
+        // Número del dueño desde Python
+        const OWNER_PHONE = "{{ info.whatsapp }}";
+
+        function enviarReserva() {
+            let nombre = document.getElementById('res_nombre').value;
+            let apellido = document.getElementById('res_apellido').value;
+            let celular = document.getElementById('res_celular').value;
+            let ws_contacto = document.getElementById('res_whatsapp').value || "Mismo que celular";
+            let email = document.getElementById('res_email').value || "No indicado";
+            let fecha = document.getElementById('res_fecha').value || "Por definir";
+            let dias = document.getElementById('res_dias').value;
+            let adultos = document.getElementById('res_adultos').value;
+            let ninos = document.getElementById('res_ninos').value;
+
+            if(!nombre || !apellido || !celular || !dias) {
+                alert("Por favor completa los campos obligatorios (*)");
+                return;
+            }
+
+            let msg = `*SOLICITUD DE RESERVA - ${nombre.toUpperCase()}*\n\n`;
+            msg += `👤 *Cliente:* ${nombre} ${apellido}\n`;
+            msg += `📞 *Celular:* ${celular}\n`;
+            msg += `📱 *WhatsApp Contacto:* ${ws_contacto}\n`;
+            msg += `📧 *Email:* ${email}\n`;
+            msg += `--------------------------------\n`;
+            msg += `📅 *Fecha Llegada:* ${fecha}\n`;
+            msg += `🕒 *Estadía:* ${dias}\n`;
+            msg += `👥 *Adultos:* ${adultos} | *Niños:* ${ninos}\n`;
+            msg += `--------------------------------\n`;
+            msg += `Hola, me gustaría reservar la casa de playa con estos detalles.`;
+
+            window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function enviarOpinion() {
+            let nombre = document.getElementById('opi_nombre').value;
+            let estrellas = document.getElementById('opi_puntuacion').value;
+            let mensaje = document.getElementById('opi_mensaje').value;
+
+            if(!nombre || !mensaje) {
+                alert("Por favor escribe tu nombre y comentario.");
+                return;
+            }
+
+            let starText = "★".repeat(estrellas);
+            
+            let msg = `*NUEVO COMENTARIO WEB*\n\n`;
+            msg += `👤 *Nombre:* ${nombre}\n`;
+            msg += `⭐ *Calificación:* ${starText} (${estrellas}/5)\n`;
+            msg += `💬 *Opinión:* ${mensaje}\n\n`;
+            msg += `_Hola, quiero dejar este comentario para la web._`;
+
+            window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
     </script>
 </body>
 </html>
