@@ -34,17 +34,10 @@ TESTIMONIOS = [
     {"nombre": "Grupo Familia Pérez", "comentario": "Excelente para ir con niños, muy seguro y cómodo."}
 ]
 
-# Función auxiliar para guardar datos en un archivo (Simulación de base de datos)
-def guardar_registro(tipo, datos):
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    linea = f"[{timestamp}] {tipo.upper()}: {datos}\n"
-    # Esto creará un archivo 'registros.txt' en tu carpeta del proyecto
-    with open("registros.txt", "a", encoding="utf-8") as f:
-        f.write(linea)
-
 @app.route('/')
 def home():
     carpeta_img = os.path.join(app.root_path, 'static', 'img')
+    # Manejo de error por si la carpeta no existe en Vercel
     if os.path.exists(carpeta_img):
         archivos = os.listdir(carpeta_img)
         ext_validas = ('.jpg', '.jpeg', '.png', '.webp')
@@ -52,7 +45,6 @@ def home():
     else:
         galeria = []
     
-    # Mantenemos el link de WS solo para el botón flotante
     mensaje = f"Hola, vi la web de {CASA_INFO['nombre']} y quisiera información."
     ws_link = f"https://wa.me/{CASA_INFO['whatsapp']}?text={mensaje.replace(' ', '%20')}"
     
@@ -66,28 +58,29 @@ def home():
                            ws_link=ws_link,
                            anio=anio_actual)
 
-# --- NUEVA RUTA PARA PROCESAR RESERVA ---
+# --- RUTA DE RESERVA (Modificada para NO guardar archivo) ---
 @app.route('/api/reserva', methods=['POST'])
 def procesar_reserva():
-    data = request.json
-    # Aquí es donde el sistema "gestiona internamente"
-    # Guardamos los datos en un archivo de texto
-    guardar_registro("RESERVA", data)
-    print("Nueva reserva recibida:", data) 
-    
-    # NOTA: Para enviar un WhatsApp REAL desde el servidor automáticamente, 
-    # se necesitaría una API pagada como Twilio. Por ahora, lo guardamos.
-    
-    return jsonify({"status": "success", "message": "Reserva recibida"})
+    try:
+        data = request.json
+        # Solo imprimimos en la consola del servidor (Logs de Vercel)
+        print(">>> NUEVA RESERVA RECIBIDA:", data)
+        return jsonify({"status": "success", "message": "Reserva recibida"})
+    except Exception as e:
+        print("Error en reserva:", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
-# --- NUEVA RUTA PARA PROCESAR OPINIÓN ---
+# --- RUTA DE OPINIÓN (Modificada para NO guardar archivo) ---
 @app.route('/api/opinion', methods=['POST'])
 def procesar_opinion():
-    data = request.json
-    guardar_registro("OPINION", data)
-    print("Nueva opinión recibida:", data)
-    
-    return jsonify({"status": "success", "message": "Opinión recibida"})
+    try:
+        data = request.json
+        # Solo imprimimos en la consola del servidor
+        print(">>> NUEVA OPINIÓN RECIBIDA:", data)
+        return jsonify({"status": "success", "message": "Opinión recibida"})
+    except Exception as e:
+        print("Error en opinión:", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
