@@ -36,19 +36,16 @@ TESTIMONIOS = [
 
 @app.route('/')
 def home():
+    # Intenta buscar imágenes, si falla en Vercel no rompe la página
     carpeta_img = os.path.join(app.root_path, 'static', 'img')
-    # Manejo de error por si la carpeta no existe en Vercel
+    galeria = []
     if os.path.exists(carpeta_img):
         archivos = os.listdir(carpeta_img)
         ext_validas = ('.jpg', '.jpeg', '.png', '.webp')
         galeria = [img for img in archivos if img.lower().endswith(ext_validas)]
-    else:
-        galeria = []
     
     mensaje = f"Hola, vi la web de {CASA_INFO['nombre']} y quisiera información."
     ws_link = f"https://wa.me/{CASA_INFO['whatsapp']}?text={mensaje.replace(' ', '%20')}"
-    
-    anio_actual = datetime.now().year
     
     return render_template('index.html', 
                            info=CASA_INFO, 
@@ -56,31 +53,38 @@ def home():
                            reviews=TESTIMONIOS, 
                            galeria=galeria,
                            ws_link=ws_link,
-                           anio=anio_actual)
+                           anio=datetime.now().year)
 
-# --- RUTA DE RESERVA (Modificada para NO guardar archivo) ---
+# === RUTAS INTERNAS (CORREGIDAS PARA VERCEL) ===
+
 @app.route('/api/reserva', methods=['POST'])
 def procesar_reserva():
     try:
         data = request.json
-        # Solo imprimimos en la consola del servidor (Logs de Vercel)
-        print(">>> NUEVA RESERVA RECIBIDA:", data)
-        return jsonify({"status": "success", "message": "Reserva recibida"})
+        # Imprimimos en la consola de Vercel en lugar de guardar archivo
+        print("------- NUEVA RESERVA -------")
+        print(data)
+        print("-----------------------------")
+        return jsonify({"status": "success", "message": "Reserva OK"})
     except Exception as e:
-        print("Error en reserva:", e)
-        return jsonify({"status": "error", "message": str(e)}), 500
+        print("Error:", e)
+        return jsonify({"status": "error"}), 500
 
-# --- RUTA DE OPINIÓN (Modificada para NO guardar archivo) ---
 @app.route('/api/opinion', methods=['POST'])
 def procesar_opinion():
     try:
         data = request.json
-        # Solo imprimimos en la consola del servidor
-        print(">>> NUEVA OPINIÓN RECIBIDA:", data)
-        return jsonify({"status": "success", "message": "Opinión recibida"})
+        # Imprimimos en la consola de Vercel
+        print("------- NUEVA OPINIÓN -------")
+        print(data)
+        print("-----------------------------")
+        return jsonify({"status": "success", "message": "Opinion OK"})
     except Exception as e:
-        print("Error en opinión:", e)
-        return jsonify({"status": "error", "message": str(e)}), 500
+        print("Error:", e)
+        return jsonify({"status": "error"}), 500
+
+# Esta línea es importante para que Vercel sepa qué ejecutar
+app = app 
 
 if __name__ == '__main__':
     app.run(debug=True)
