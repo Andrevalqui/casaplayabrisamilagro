@@ -8,7 +8,6 @@
     <!-- METADATOS -->
     <meta property="og:title" content="{{ info.nombre }} - Tu Refugio frente al Mar">
     <meta property="og:description" content="Piscina privada, zona de parrilla y la mejor vista en Pacasmayo. Reserva tu experiencia inolvidable.">
-    <!-- Asegúrate de tener foto1.jpg en static/img/ para que esto funcione -->
     <meta property="og:image" content="{{ url_for('static', filename='img/foto1.jpg', _external=True) }}">
     <meta property="og:url" content="https://casaplayabrisamilagro.vercel.app">
     <meta name="theme-color" content="#c5a47e">
@@ -17,8 +16,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
-    <!-- Versión v=11 para asegurar cambios -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=11">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=12">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -44,7 +42,6 @@
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#experiencia">Experiencia</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#comodidades">Servicios</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#espacios">Espacios</a></li>
-                    <!-- Enlaces nuevos -->
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#reserva">Haz tu Reserva</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#testimonios">Opiniones</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#comentarios">Déjanos tu Comentario</a></li>
@@ -98,7 +95,6 @@
         <div class="container" data-aos="fade-in">
             <h2 class="section-title text-center">Nuestros Espacios</h2>
             <div class="divider mx-auto mb-5"></div>
-            
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     {% for foto in galeria %}
@@ -123,13 +119,13 @@
         </div>
     </section>
 
-    <!-- === NUEVO: SECCIÓN DE RESERVA === -->
+    <!-- === SECCIÓN DE RESERVA === -->
     <section id="reserva" class="py-5 bg-gold text-white">
         <div class="container">
             <div class="text-center mb-5" data-aos="fade-up">
                 <h2 class="section-title text-white">Haz tu Reserva</h2>
                 <div class="divider bg-white mx-auto mb-3"></div>
-                <p>Completa el formulario y te enviaremos la cotización a tu WhatsApp.</p>
+                <p>Completa el formulario para gestionar tu reserva.</p>
             </div>
 
             <div class="row justify-content-center">
@@ -188,7 +184,7 @@
                                     
                                     <div class="col-12 text-center mt-4">
                                         <button type="button" class="btn btn-dark btn-lg px-5 rounded-pill" onclick="enviarReserva()">
-                                            <i class="fab fa-whatsapp me-2"></i> Enviar Solicitud
+                                            <i class="far fa-calendar-check me-2"></i> Confirmar Reserva
                                         </button>
                                     </div>
                                 </div>
@@ -207,18 +203,15 @@
                 <h2 class="section-title">Ubicación Frente al Mar</h2>
                 <div class="divider mx-auto mb-4"></div>
                 <p class="mb-4">A solo 20 minutos de la Plaza de Armas de Pacasmayo.</p>
-                
                 <div class="ratio ratio-21x9 shadow-lg rounded mb-4 border border-2 mx-auto" style="max-width: 900px;">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.568466657864!2d-79.5783845856866!3d-7.455301594619717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjcnMTkuMSJTIDc5wrAzNCczNC4zIlc!5e0!3m2!1ses!2spe!4v1645000000000!5m2!1ses!2spe" 
                             style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
-
                 <a href="{{ info.mapa_link }}" target="_blank" class="btn btn-outline-dark btn-lg rounded-pill px-4 mb-5">
                     <i class="fas fa-map-marked-alt me-2"></i> Ver ruta en Google Maps
                 </a>
             </div>
 
-            <!-- Botones Redes en Sección -->
             <div class="mt-4" data-aos="fade-up">
                 <h4 class="mb-4" style="font-family: 'Great Vibes', cursive; font-size: 2.5rem;">Síguenos</h4>
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -251,12 +244,12 @@
         </div>
     </section>
 
-    <!-- === NUEVO: SECCIÓN DÉJANOS TU COMENTARIO === -->
+    <!-- === SECCIÓN DÉJANOS TU COMENTARIO === -->
     <section id="comentarios" class="py-5 bg-light">
         <div class="container text-center" data-aos="fade-up">
             <h3 class="section-title mb-4">Déjanos tu Comentario</h3>
             <div class="divider mx-auto mb-4"></div>
-            <p class="mb-4 text-muted">Tu opinión nos ayuda a mejorar. Envíanos tu reseña por WhatsApp.</p>
+            <p class="mb-4 text-muted">Tu opinión nos ayuda a mejorar. Envíanos tu reseña.</p>
             
             <div class="row justify-content-center">
                 <div class="col-md-6">
@@ -334,72 +327,75 @@
         // 4. Lightbox
         const lightbox = GLightbox({ touchNavigation: true, loop: true, autoplayVideos: true });
 
-        // === 5. FUNCIONES DE ENVÍO WHATSAPP ===
+        // === 5. FUNCIONES DE ENVÍO INTERNO (MODIFICADO) ===
         
-        // Número del dueño desde Python
-        const OWNER_PHONE = "{{ info.whatsapp }}";
-
         function enviarReserva() {
-            let nombre = document.getElementById('res_nombre').value;
-            let apellido = document.getElementById('res_apellido').value;
-            let celular = document.getElementById('res_celular').value;
-            let ws_contacto = document.getElementById('res_whatsapp').value || "Mismo que celular";
-            let email = document.getElementById('res_email').value || "No indicado";
-            let fecha = document.getElementById('res_fecha').value || "Por definir";
-            let dias = document.getElementById('res_dias').value;
-            let adultos = document.getElementById('res_adultos').value;
-            let ninos = document.getElementById('res_ninos').value;
+            // Recolectar datos
+            let data = {
+                nombre: document.getElementById('res_nombre').value,
+                apellido: document.getElementById('res_apellido').value,
+                celular: document.getElementById('res_celular').value,
+                whatsapp: document.getElementById('res_whatsapp').value || "Mismo que celular",
+                email: document.getElementById('res_email').value || "No indicado",
+                fecha: document.getElementById('res_fecha').value || "Por definir",
+                dias: document.getElementById('res_dias').value,
+                adultos: document.getElementById('res_adultos').value,
+                ninos: document.getElementById('res_ninos').value
+            };
 
-            if(!nombre || !apellido || !celular || !dias) {
+            // Validar campos obligatorios
+            if(!data.nombre || !data.apellido || !data.celular || !data.dias) {
                 alert("Por favor completa los campos obligatorios (*)");
                 return;
             }
 
-            let msg = `*SOLICITUD DE RESERVA - ${nombre.toUpperCase()}*\n\n`;
-            msg += `👤 *Cliente:* ${nombre} ${apellido}\n`;
-            msg += `📞 *Celular:* ${celular}\n`;
-            msg += `📱 *WhatsApp Contacto:* ${ws_contacto}\n`;
-            msg += `📧 *Email:* ${email}\n`;
-            msg += `--------------------------------\n`;
-            msg += `📅 *Fecha Llegada:* ${fecha}\n`;
-            msg += `🕒 *Estadía:* ${dias}\n`;
-            msg += `👥 *Adultos:* ${adultos} | *Niños:* ${ninos}\n`;
-            msg += `--------------------------------\n`;
-            msg += `Hola, me gustaría reservar la casa de playa con estos detalles.`;
-
-            window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+            // Enviar datos internamente al sistema (Flask) sin abrir WhatsApp
+            fetch('/api/reserva', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                // ALERTA PERSONALIZADA
+                alert("Se realizó la reserva, el administrador se estará comunicando con usted en cuánto revise su reserva, muchas gracias por reservar con nosotros.");
+                document.getElementById('formReserva').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Hubo un error al procesar la solicitud.");
+            });
         }
 
         function enviarOpinion() {
-            let nombre = document.getElementById('opi_nombre').value;
-            let estrellas = document.getElementById('opi_puntuacion').value;
-            let mensaje = document.getElementById('opi_mensaje').value;
+            let data = {
+                nombre: document.getElementById('opi_nombre').value,
+                estrellas: document.getElementById('opi_puntuacion').value,
+                mensaje: document.getElementById('opi_mensaje').value
+            };
 
-            if(!nombre || !mensaje) {
+            if(!data.nombre || !data.mensaje) {
                 alert("Por favor escribe tu nombre y comentario.");
                 return;
             }
-
-            let starText = "★".repeat(estrellas);
             
-            // Lógica para enviar a WhatsApp
-            let msg = `*NUEVA OPINIÓN PARA REVISIÓN*\n\n`;
-            msg += `👤 *Nombre:* ${nombre}\n`;
-            msg += `⭐ *Calificación:* ${starText} (${estrellas}/5)\n`;
-            msg += `💬 *Opinión:* ${mensaje}\n\n`;
-            msg += `_Hola, envío mi opinión para que sea revisada y publicada en la web._`;
-
-            // Mensaje al usuario (Seguridad Psicológica)
-            // Le decimos que pasará por moderación para que entienda por qué no sale de inmediato.
-            alert("¡Muchas gracias por tu opinión! \n\nTu comentario ha sido enviado a nuestro equipo.");
-
-            // Limpiar formulario
-            document.getElementById('formOpinion').reset();
-
-            // Abrir WhatsApp
-            window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+            // Enviar datos internamente al sistema (Flask)
+            fetch('/api/opinion', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                // ALERTA PERSONALIZADA
+                alert("¡Muchas gracias por tu opinión! Tu comentario ha sido enviado a nuestro equipo.");
+                document.getElementById('formOpinion').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Hubo un error al enviar la opinión.");
+            });
         }
     </script>
 </body>
 </html>
-
