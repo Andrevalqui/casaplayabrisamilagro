@@ -382,14 +382,24 @@
 
             let starText = "★".repeat(estrellas);
             
-            let msg = `*NUEVO COMENTARIO WEB*\n\n`;
+            // Lógica para enviar a WhatsApp
+            let msg = `*NUEVA OPINIÓN PARA REVISIÓN*\n\n`;
             msg += `👤 *Nombre:* ${nombre}\n`;
             msg += `⭐ *Calificación:* ${starText} (${estrellas}/5)\n`;
             msg += `💬 *Opinión:* ${mensaje}\n\n`;
-            msg += `_Hola, quiero dejar este comentario para la web._`;
+            msg += `_Hola, envío mi opinión para que sea revisada y publicada en la web._`;
 
+            // Mensaje al usuario (Seguridad Psicológica)
+            // Le decimos que pasará por moderación para que entienda por qué no sale de inmediato.
+            alert("¡Muchas gracias por tu opinión! \n\nTu comentario ha sido enviado a nuestro equipo.");
+
+            // Limpiar formulario
+            document.getElementById('formOpinion').reset();
+
+            // Abrir WhatsApp
             window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
 </body>
 </html>
+
