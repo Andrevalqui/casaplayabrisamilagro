@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -10,7 +10,7 @@ CASA_INFO = {
     "ubicacion": "Balneario El Milagro, Pacasmayo",
     "descripcion": "Un refugio exclusivo frente al mar donde el diseño moderno se encuentra con la naturaleza. Ideal para desconectar y recargar energías.",
     "precio": "Consultar Vía WhatsApp",
-    "whatsapp": "997317288",
+    "whatsapp": "51997317288", # Asegúrate de poner el código de país (51 para Perú) sin el '+'
     "mapa_link": "https://www.google.com/maps/dir/Plaza+de+Armas+de+Pacasmayo,+Calle+Manco+C%C3%A1pac,+Pacasmayo/-7.4553016,-79.5761959/@-7.4238644,-79.5677181,14z/data=!4m9!4m8!1m5!1m1!1s0x904d46080fc459e5:0xfb2f4f890f3a7d06!2m2!1d-79.5722674!2d-7.40112!1m0!3e0?entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoASAFQAw%3D%3D",
     "instagram": "https://www.instagram.com/casa.brisaelmilagro/",
     "facebook": "https://www.facebook.com/people/Casa-de-playa-Brisa-El-Milagro/61586554494381/?mibextid=wwXIfr&rdid=LauYjsGBeXeunVXp&share_url=https%253A%252F%252Fwww.facebook.com%252Fshare%252F1Coy6aLzqM%252F%253Fmibextid%253DwwXIfr"
@@ -36,14 +36,15 @@ TESTIMONIOS = [
 
 @app.route('/')
 def home():
-    # Intenta buscar imágenes, si falla en Vercel no rompe la página
     carpeta_img = os.path.join(app.root_path, 'static', 'img')
     galeria = []
+    # Validación simple para que no falle en Vercel
     if os.path.exists(carpeta_img):
         archivos = os.listdir(carpeta_img)
         ext_validas = ('.jpg', '.jpeg', '.png', '.webp')
         galeria = [img for img in archivos if img.lower().endswith(ext_validas)]
     
+    # Link para el botón flotante
     mensaje = f"Hola, vi la web de {CASA_INFO['nombre']} y quisiera información."
     ws_link = f"https://wa.me/{CASA_INFO['whatsapp']}?text={mensaje.replace(' ', '%20')}"
     
@@ -54,37 +55,6 @@ def home():
                            galeria=galeria,
                            ws_link=ws_link,
                            anio=datetime.now().year)
-
-# === RUTAS INTERNAS (CORREGIDAS PARA VERCEL) ===
-
-@app.route('/api/reserva', methods=['POST'])
-def procesar_reserva():
-    try:
-        data = request.json
-        # Imprimimos en la consola de Vercel en lugar de guardar archivo
-        print("------- NUEVA RESERVA -------")
-        print(data)
-        print("-----------------------------")
-        return jsonify({"status": "success", "message": "Reserva OK"})
-    except Exception as e:
-        print("Error:", e)
-        return jsonify({"status": "error"}), 500
-
-@app.route('/api/opinion', methods=['POST'])
-def procesar_opinion():
-    try:
-        data = request.json
-        # Imprimimos en la consola de Vercel
-        print("------- NUEVA OPINIÓN -------")
-        print(data)
-        print("-----------------------------")
-        return jsonify({"status": "success", "message": "Opinion OK"})
-    except Exception as e:
-        print("Error:", e)
-        return jsonify({"status": "error"}), 500
-
-# Esta línea es importante para que Vercel sepa qué ejecutar
-app = app 
 
 if __name__ == '__main__':
     app.run(debug=True)
