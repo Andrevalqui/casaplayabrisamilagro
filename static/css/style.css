@@ -66,6 +66,7 @@ h1, h2, h3 {
 /* =========================================
    2. BARRA FLOTANTE DE REDES (SIDEBAR)
    ========================================= */
+/* Esto hace el "Seguimiento correspondiente" en la página */
 .social-sidebar {
     position: fixed;
     right: 20px;
