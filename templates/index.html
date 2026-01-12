@@ -329,42 +329,44 @@
 
         // === 5. FUNCIONES DE ENVÍO INTERNO (MODIFICADO) ===
         
+        // === FUNCIONES DE ENVÍO INTERNO ===
+        
         function enviarReserva() {
             // Recolectar datos
             let data = {
                 nombre: document.getElementById('res_nombre').value,
                 apellido: document.getElementById('res_apellido').value,
                 celular: document.getElementById('res_celular').value,
-                whatsapp: document.getElementById('res_whatsapp').value || "Mismo que celular",
-                email: document.getElementById('res_email').value || "No indicado",
-                fecha: document.getElementById('res_fecha').value || "Por definir",
+                whatsapp: document.getElementById('res_whatsapp').value,
+                email: document.getElementById('res_email').value,
+                fecha: document.getElementById('res_fecha').value,
                 dias: document.getElementById('res_dias').value,
                 adultos: document.getElementById('res_adultos').value,
                 ninos: document.getElementById('res_ninos').value
             };
 
-            // Validar campos obligatorios
-            if(!data.nombre || !data.apellido || !data.celular || !data.dias) {
-                alert("Por favor completa los campos obligatorios (*)");
+            // Validación simple
+            if(!data.nombre || !data.celular || !data.dias) {
+                alert("Por favor completa los campos obligatorios.");
                 return;
             }
 
-            // Enviar datos internamente al sistema (Flask) sin abrir WhatsApp
+            // Enviar a Python (web.py)
             fetch('/api/reserva', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             })
-            .then(response => response.json())
-            .then(result => {
-                // ALERTA PERSONALIZADA
-                alert("Se realizó la reserva, el administrador se estará comunicando con usted en cuánto revise su reserva, muchas gracias por reservar con nosotros.");
-                document.getElementById('formReserva').reset();
+            .then(response => {
+                if (response.ok) {
+                    // ALERTA EXACTA QUE PEDISTE
+                    alert("Se realizó la reserva, el administrador se estará comunicando con usted en cuánto revise su reserva, muchas gracias por reservar con nosotros.");
+                    document.getElementById('formReserva').reset();
+                } else {
+                    alert("Hubo un problema de conexión. Inténtalo de nuevo.");
+                }
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Hubo un error al procesar la solicitud.");
-            });
+            .catch(error => console.error('Error:', error));
         }
 
         function enviarOpinion() {
@@ -379,22 +381,22 @@
                 return;
             }
             
-            // Enviar datos internamente al sistema (Flask)
+            // Enviar a Python (web.py)
             fetch('/api/opinion', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             })
-            .then(response => response.json())
-            .then(result => {
-                // ALERTA PERSONALIZADA
-                alert("¡Muchas gracias por tu opinión! Tu comentario ha sido enviado a nuestro equipo.");
-                document.getElementById('formOpinion').reset();
+            .then(response => {
+                if (response.ok) {
+                    // ALERTA EXACTA QUE PEDISTE
+                    alert("¡Muchas gracias por tu opinión! Tu comentario ha sido enviado a nuestro equipo.");
+                    document.getElementById('formOpinion').reset();
+                } else {
+                    alert("Hubo un problema al enviar la opinión.");
+                }
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Hubo un error al enviar la opinión.");
-            });
+            .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
