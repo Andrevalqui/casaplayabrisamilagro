@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # DATOS DE LA CASA
 CASA_INFO = {
-    "nombre": "Brisa El Milagro",
+    "nombre": "Brisa el Milagro",
     "ubicacion": "Balneario El Milagro, Pacasmayo",
     "descripcion": "Un refugio exclusivo frente al mar donde el diseño moderno se encuentra con la naturaleza. Ideal para desconectar y recargar energías.",
     "precio": "Consultar Vía WhatsApp",
@@ -66,4 +66,5 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
