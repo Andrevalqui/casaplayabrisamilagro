@@ -12,6 +12,35 @@
     <meta property="og:url" content="https://casaplayabrisamilagro.vercel.app">
     <meta name="theme-color" content="#c5a47e">
 
+    <!-- === MEJORA 1: SCHEMA MARKUP (SEO para Google) === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LodgingBusiness",
+      "name": "{{ info.nombre }}",
+      "image": "{{ url_for('static', filename='img/foto1.jpg', _external=True) }}",
+      "@id": "https://casaplayabrisamilagro.vercel.app",
+      "url": "https://casaplayabrisamilagro.vercel.app",
+      "telephone": "+51{{ info.whatsapp }}",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Balneario El Milagro",
+        "addressLocality": "Pacasmayo",
+        "addressRegion": "La Libertad",
+        "addressCountry": "PE"
+      },
+      "priceRange": "$$$",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -7.4553016,
+        "longitude": -79.5761959
+      }
+    }
+    </script>
+
+    <!-- === MEJORA 4: FAVICON (Icono de pestaña) === -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/png">
+
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -42,9 +71,9 @@
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#experiencia">Experiencia</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#comodidades">Servicios</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#espacios">Espacios</a></li>
+                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#faq">Preguntas</a></li> <!-- Link actualizado a FAQ -->
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#reserva">Haz tu Reserva</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#testimonios">Opiniones</a></li>
-                    <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#comentarios">Déjanos tu Comentario</a></li>
                 </ul>
             </div>
         </div>
@@ -116,6 +145,34 @@
                 <div class="swiper-pagination"></div>
             </div>
             <p class="text-center text-muted mt-3 small"><i class="fas fa-search-plus"></i> Haz clic en las fotos para ampliarlas</p>
+        </div>
+    </section>
+
+    <!-- === MEJORA 3: PREGUNTAS FRECUENTES (Ubicado estratégicamente antes de reservar) === -->
+    <section id="faq" class="py-5 bg-white">
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title text-center">Preguntas Frecuentes</h2>
+            <div class="divider mx-auto mb-5"></div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion accordion-flush" id="accordionFAQ">
+                        {% for faq in faqs %}
+                        <div class="accordion-item border-bottom">
+                            <h2 class="accordion-header" id="heading{{ loop.index }}">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" style="color: var(--color-dark);">
+                                    <i class="fas fa-info-circle text-gold me-2"></i> {{ faq.pregunta }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                <div class="accordion-body text-muted small">
+                                    {{ faq.respuesta }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -203,6 +260,15 @@
                 <h2 class="section-title">Ubicación Frente al Mar</h2>
                 <div class="divider mx-auto mb-4"></div>
                 <p class="mb-4">A solo 20 minutos de la Plaza de Armas de Pacasmayo.</p>
+
+                <!-- === MEJORA 2: WIDGET CLIMA === -->
+                <div class="mb-4 col-md-8 mx-auto">
+                    <a class="weatherwidget-io" href="https://forecast7.com/es/n7d40n79d57/pacasmayo/" data-label_1="PACASMAYO" data-label_2="CLIMA ACTUAL" data-theme="pure" >PACASMAYO CLIMA ACTUAL</a>
+                    <script>
+                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                    </script>
+                </div>
+
                 <div class="ratio ratio-21x9 shadow-lg rounded mb-4 border border-2 mx-auto" style="max-width: 900px;">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.568466657864!2d-79.5783845856866!3d-7.455301594619717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjcnMTkuMSJTIDc5wrAzNCczNC4zIlc!5e0!3m2!1ses!2spe!4v1645000000000!5m2!1ses!2spe" 
                             style="border:0;" allowfullscreen="" loading="lazy"></iframe>
@@ -284,12 +350,6 @@
         </div>
     </section>
 
-    <!-- === CONTADOR DE VISITAS EN VIVO === -->
-    <div class="live-viewer-badge" id="liveCounterBadge" style="display: none;">
-        <span class="live-dot"></span>
-        <span><b id="viewerCount">0</b> personas viendo ahora</span>
-    </div>
-
     <!-- === BARRA LATERAL FLOTANTE (REDES) === -->
     <div class="social-sidebar">
         <a href="{{ ws_link }}" class="social-btn float-wa" target="_blank" title="WhatsApp">
@@ -300,6 +360,23 @@
         </a>
         <a href="{{ info.facebook }}" class="social-btn float-fb" target="_blank" title="Facebook">
             <i class="fab fa-facebook-f"></i>
+        </a>
+    </div>
+
+    <!-- === CONTADOR DE VISITAS EN VIVO (Del paso anterior) === -->
+    <div class="live-viewer-badge" id="liveCounterBadge" style="display: none;">
+        <span class="live-dot"></span>
+        <span><b id="viewerCount">0</b> personas viendo ahora</span>
+    </div>
+
+    <!-- === MEJORA 5: BARRA FIJA MÓVIL === -->
+    <div class="mobile-sticky-bar d-lg-none">
+        <div class="price-info">
+            <small>Desde</small>
+            <span class="fw-bold">S/ Consultar</span>
+        </div>
+        <a href="#reserva" class="btn btn-dark rounded-pill px-4">
+            Reserva Ahora
         </a>
     </div>
 
@@ -395,8 +472,7 @@
             window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // === 6. LÓGICA DE VISITANTES EN VIVO (Simulación Marketing) ===
-        
+        // === 6. LÓGICA DE VISITANTES EN VIVO (Del paso anterior) ===
         function initLiveCounter() {
             const badge = document.getElementById('liveCounterBadge');
             const countSpan = document.getElementById('viewerCount');
@@ -412,32 +488,21 @@
             setTimeout(() => {
                 countSpan.innerText = currentUsers;
                 badge.style.display = 'flex'; // Mostrar badge
-                badge.classList.add('fade-in-up'); // Clase de animación (opcional si usas AOS)
             }, 2000);
 
             // Función para actualizar el número aleatoriamente
             setInterval(() => {
                 // Decidir si sube o baja (50% probabilidad)
                 const change = Math.random() > 0.5 ? 1 : -1;
-                
                 let nextUsers = currentUsers + change;
-
-                // Mantener dentro de los límites lógicos
                 if (nextUsers < minUsers) nextUsers = minUsers + 1;
                 if (nextUsers > maxUsers) nextUsers = maxUsers - 1;
-
                 currentUsers = nextUsers;
                 countSpan.innerText = currentUsers;
-                
-            }, 7000); // Cambiar cada 7 segundos (para que no sea molesto)
+            }, 7000); 
         }
 
-        // Iniciar contador
         initLiveCounter();
-        
     </script>
 </body>
 </html>
-
-
-
