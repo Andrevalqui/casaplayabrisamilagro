@@ -35,10 +35,10 @@ TESTIMONIOS = [
 ]
 
 FAQS = [
-    {"pregunta": "¿Se permiten mascotas?", "respuesta": "Sí, somos Pet Friendly. Solo pedimos cuidar la limpieza de las áreas."},
-    {"pregunta": "¿Cuál es el horario de entrada y salida?", "respuesta": "Check-in: 2:00 PM | Check-out: 12:00 PM."},
-    {"pregunta": "¿Hay agua caliente e internet?", "respuesta": "Sí, contamos con Wi-Fi (Fibra óptica) y agua caliente en todos los baños."},
-    {"pregunta": "¿Piden garantía?", "respuesta": "Sí, una garantía de seguridad que se devuelve al final de la estadía."},
+    {"pregunta": "¿Se permiten mascotas?", "respuesta": "Sí, somos Pet Friendly: Si, Solo pedimos cuidar la limpieza."},
+    {"pregunta": "¿Cuál es la hora de Check-in y Check-out?": "respuesta": "Check-in: 12:00 PM | Check-out: 12:00 PM."},
+    {"pregunta": "¿Hay agua caliente e internet?", "respuesta": "Actualmente no Contamos con Wi-Fi (estamos gestión) y terma próximamente."},
+    {"pregunta": "¿Piden garantía?", "respuesta": "Sí, garantía de 200 soles se solicita una garantía de daños que se devuelve al finalizar la estadía."},
     {"pregunta": "¿Cómo reservo?", "respuesta": "Con el 50% de adelanto vía transferencia o Yape/Plin."}
 ]
 
@@ -67,4 +67,5 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
