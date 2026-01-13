@@ -34,6 +34,14 @@ TESTIMONIOS = [
     {"nombre": "Grupo Familia Pérez", "comentario": "Excelente para ir con niños, muy seguro y cómodo."}
 ]
 
+FAQS = [
+    {"pregunta": "¿Se permiten mascotas?", "respuesta": "Sí, somos Pet Friendly. Solo pedimos cuidar la limpieza de las áreas."},
+    {"pregunta": "¿Cuál es el horario de entrada y salida?", "respuesta": "Check-in: 2:00 PM | Check-out: 12:00 PM."},
+    {"pregunta": "¿Hay agua caliente e internet?", "respuesta": "Sí, contamos con Wi-Fi (Fibra óptica) y agua caliente en todos los baños."},
+    {"pregunta": "¿Piden garantía?", "respuesta": "Sí, una garantía de seguridad que se devuelve al final de la estadía."},
+    {"pregunta": "¿Cómo reservo?", "respuesta": "Con el 50% de adelanto vía transferencia o Yape/Plin."}
+]
+
 @app.route('/')
 def home():
     carpeta_img = os.path.join(app.root_path, 'static', 'img')
@@ -51,10 +59,12 @@ def home():
     return render_template('index.html', 
                            info=CASA_INFO, 
                            servicios=SERVICIOS, 
-                           reviews=TESTIMONIOS, 
+                           reviews=TESTIMONIOS,
+                           faqs=FAQS,
                            galeria=galeria,
                            ws_link=ws_link,
                            anio=datetime.now().year)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
