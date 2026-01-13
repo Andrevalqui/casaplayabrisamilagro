@@ -381,44 +381,59 @@ html {
 }
 
 /* =========================================
-   MEJORA 6: ESTILOS BARRA MÓVIL
+   MEJORA 6: ESTILOS BARRA MÓVIL (Sticky Footer)
    ========================================= */
 .mobile-sticky-bar {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: white;
-    padding: 10px 20px;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-    z-index: 1001; /* Encima de todo, incluso del contador */
+    background-color: white; /* Fondo blanco limpio */
+    padding: 12px 20px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1); /* Sombra hacia arriba */
+    z-index: 9999; /* Para que esté encima de todo */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #f0f0f0;
+    animation: slideUp 0.5s ease-out;
 }
 
+/* Texto de precio "Desde S/..." */
 .mobile-sticky-bar .price-info {
     display: flex;
     flex-direction: column;
     line-height: 1.2;
+    color: var(--color-dark);
 }
 
-/* Ajustes para que no choque con los otros elementos flotantes */
+/* Animación de entrada suave */
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+/* AJUSTES PARA QUE NO SE TAPE CON EL CONTADOR DE VISITAS */
 @media (max-width: 991px) {
-    /* Subir el contador de visitas para que no lo tape la barra */
+    /* Subimos el contador de visitas para que la barra no lo tape */
     .live-viewer-badge {
-        bottom: 80px !important; 
+        bottom: 85px !important; 
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: max-content;
+        font-size: 0.75rem;
+        padding: 6px 15px;
     }
     
-    /* Subir los botones de redes sociales */
+    /* Subimos los botones flotantes de redes sociales */
     .social-sidebar {
-        bottom: 80px !important;
+        bottom: 85px !important;
     }
     
-    /* Añadir espacio al final de la web para que se pueda leer el footer */
+    /* Agregamos espacio extra al final de la página para que el footer se lea */
     body {
-        padding-bottom: 70px; 
+        padding-bottom: 80px; 
     }
 }
+
 
