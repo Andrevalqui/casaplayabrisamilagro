@@ -284,6 +284,12 @@
         </div>
     </section>
 
+    <!-- === CONTADOR DE VISITAS EN VIVO === -->
+    <div class="live-viewer-badge" id="liveCounterBadge" style="display: none;">
+        <span class="live-dot"></span>
+        <span><b id="viewerCount">0</b> personas viendo ahora</span>
+    </div>
+
     <!-- === BARRA LATERAL FLOTANTE (REDES) === -->
     <div class="social-sidebar">
         <a href="{{ ws_link }}" class="social-btn float-wa" target="_blank" title="WhatsApp">
@@ -388,6 +394,48 @@
             // Abrir WhatsApp directamente
             window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
         }
+
+        // === 6. LÓGICA DE VISITANTES EN VIVO (Simulación Marketing) ===
+        
+        function initLiveCounter() {
+            const badge = document.getElementById('liveCounterBadge');
+            const countSpan = document.getElementById('viewerCount');
+            
+            // Rango de personas (ej: entre 3 y 12)
+            let minUsers = 3;
+            let maxUsers = 12;
+            
+            // Generar número inicial
+            let currentUsers = Math.floor(Math.random() * (maxUsers - minUsers + 1)) + minUsers;
+            
+            // Mostrar el badge después de 2 segundos de carga para no saturar
+            setTimeout(() => {
+                countSpan.innerText = currentUsers;
+                badge.style.display = 'flex'; // Mostrar badge
+                badge.classList.add('fade-in-up'); // Clase de animación (opcional si usas AOS)
+            }, 2000);
+
+            // Función para actualizar el número aleatoriamente
+            setInterval(() => {
+                // Decidir si sube o baja (50% probabilidad)
+                const change = Math.random() > 0.5 ? 1 : -1;
+                
+                let nextUsers = currentUsers + change;
+
+                // Mantener dentro de los límites lógicos
+                if (nextUsers < minUsers) nextUsers = minUsers + 1;
+                if (nextUsers > maxUsers) nextUsers = maxUsers - 1;
+
+                currentUsers = nextUsers;
+                countSpan.innerText = currentUsers;
+                
+            }, 7000); // Cambiar cada 7 segundos (para que no sea molesto)
+        }
+
+        // Iniciar contador
+        initLiveCounter();
+        
     </script>
 </body>
 </html>
+
