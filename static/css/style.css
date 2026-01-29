@@ -509,7 +509,15 @@ html {
     justify-content: center;
     align-items: center;
     z-index: 10000;
+    opacity: 0; 
+    pointer-events: none; 
+    
     transition: opacity 0.8s ease;
+}
+
+.premium-splash.active {
+    opacity: 1;
+    pointer-events: all;
 }
 
 .splash-logo-text {
@@ -595,4 +603,5 @@ html {
     background: #b3936a;
     box-shadow: 0 5px 15px rgba(197, 164, 126, 0.4);
 }
+
 
