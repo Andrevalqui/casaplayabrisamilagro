@@ -45,7 +45,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=14">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=15">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -187,42 +187,28 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Obtenemos las fechas desde Python
-            const fechasBloqueadas = {{ bloqueadas | tojson }};
+            const fechasBloqueadas = {{ bloqueadas | tojson | safe }};
     
             const calendar = new VanillaCalendar('#calendar', {
                 settings: {
                     lang: 'es-ES',
                     selection: {
-                    day: false,   // El cliente no elige días
-                    month: true, // PERMITE ELEGIR MES
-                    year: true,  // PERMITE ELEGIR AÑO
+                        day: false,   // El cliente no elige días
+                        month: true, // PERMITE ELEGIR MES
+                        year: true,  // PERMITE ELEGIR AÑO
+                    }
                 },
-                visibility: {
-                    theme: 'light', // Forzamos tema claro para que se lea mejor
-                }
-            },
-        // Esta función se ejecuta al cargar y cada vez que cambias de mes
-            onUpdate(self) {
-                applyBlockedDates(self);
-            },
-            onInit(self) {
-                applyBlockedDates(self);
-            }
-        });
-
-    // Función interna para poner las X
-        function applyBlockedDates(self) {
-            fechasBloqueadas.forEach(fecha => {
-            // Buscamos el elemento del DOM que tiene esa fecha
-                const el = self.HTMLElement.querySelector(`[data-calendar-day="${fecha}"]`);
-                if (el) {
-                    el.classList.add('blocked-date-mark');
-                    el.title = "Reservado";
+                actions: {
+                    // Se ejecuta cada vez que cambias de mes/año o se crea el calendario
+                    getDays(day, date, HTMLElement, self) {
+                        if (fechasBloqueadas.includes(date)) {
+                            HTMLElement.classList.add('blocked-date-mark');
+                            HTMLElement.setAttribute('title', 'Ya reservado');
+                        }
+                    }
                 }
             });
-        }
-
-        calendar.init();
+            calendar.init();    
     });
     </script>
 
@@ -584,6 +570,7 @@
     </script>
 </body>
 </html>
+
 
 
 
