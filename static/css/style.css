@@ -521,14 +521,14 @@ html {
 /* Estilo exacto del Splash de Bienvenida */
 .splash-logo-text {
     font-family: 'Great Vibes', cursive !important;
-    font-size: 6rem !important; /* Grande y exquisito */
-    color: #c5a47e !important;    /* Dorado Brisa */
-    text-shadow: 2px 2px 15px rgba(0,0,0,0.8); /* Sombra profunda */
+    font-size: 5rem !important; 
+    color: #c5a47e !important;    
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.8);
     line-height: 1.1;
     text-align: center;
-    text-transform: none !important; /* Importante: la cursiva no se usa en mayúsculas */
+    /* ESTA LÍNEA ES VITAL */
+    text-transform: none !important; 
     margin: 0;
-    padding: 20px;
 }
 
 @media (max-width: 768px) {
@@ -610,6 +610,7 @@ html {
     background: #b3936a;
     box-shadow: 0 5px 15px rgba(197, 164, 126, 0.4);
 }
+
 
 
 
