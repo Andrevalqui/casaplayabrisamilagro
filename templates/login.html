@@ -2,36 +2,42 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Acceso Privado | {{ info.nombre }}</title>
+    <title>Acceso Privado | Brisa El Milagro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=20">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=35">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body class="login-body">
 
     <div class="login-card" id="loginContent">
-        <h1 class="splash-logo-text" style="font-size: 3rem;">{{ info.nombre }}</h1>
-        <p class="text-white-50 text-uppercase small ls-2 mb-4">Portal Administrativo</p>
+        <h1 class="splash-logo-text" style="font-size: 3.5rem; margin-bottom: 5px;">Brisa el Milagro</h1>
+        <p class="text-white-50 text-uppercase small ls-3 mb-5" style="letter-spacing: 3px;">Portal Administrativo</p>
         
         <form method="POST">
             <div class="mb-3">
-                <input type="text" name="username" class="form-control bg-transparent text-white border-secondary" placeholder="Usuario" required>
+                <input type="text" name="username" class="form-control" placeholder="Usuario" required>
             </div>
             <div class="mb-4">
-                <input type="password" name="password" class="form-control bg-transparent text-white border-secondary" placeholder="Contraseña" required>
+                <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
             </div>
-            <button class="btn btn-gold w-100 mb-3" type="submit">ENTRAR AL PORTAL</button>
-            <a href="/" class="text-white-50 small text-decoration-none">← Regresar a la web</a>
+            <button class="btn btn-gold w-100 mb-4" type="submit">ENTRAR AL PORTAL</button>
+            <a href="/" class="text-white-50 small text-decoration-none hover-gold">← Volver a la página principal</a>
         </form>
     </div>
 
     <script>
-        // Splash al enviar formulario
         document.querySelector('form').addEventListener('submit', function() {
+            // Cerramos la vista del login
             document.getElementById('loginContent').style.opacity = '0';
+            
+            // Creamos el splash de transición
             const s = document.createElement('div');
-            s.className = 'premium-splash';
-            s.innerHTML = '<h1 class="splash-logo-text">VERIFICANDO...</h1><div class="loader-line"></div>';
+            s.className = 'premium-splash active'; // Clase active para que se vea
+            s.innerHTML = `
+                <div class="text-center">
+                    <h1 class="splash-logo-text">VERIFICANDO ACCESO...</h1>
+                    <div class="loader-line mx-auto"></div>
+                </div>`;
             document.body.appendChild(s);
         });
     </script>
