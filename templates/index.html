@@ -133,15 +133,29 @@
             <div class="divider mx-auto mb-5"></div>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
+                    <!-- FOTOS LOCALES -->
                     {% for foto in galeria %}
                     <div class="swiper-slide">
                         <div class="photo-frame shadow-sm">
-                            <a href="{{ foto.url }}" class="glightbox">
-                                <img src="{{ foto.url }}" 
+                            <a href="{{ url_for('static', filename='img/' + foto) }}" class="glightbox">
+                                <img src="{{ url_for('static', filename='img/' + foto) }}" 
                                      class="img-fluid w-100" 
                                      style="height: 400px; object-fit: cover; border-radius: 8px;" 
-                                     loading="lazy"
-                                     alt="Foto">
+                                     loading="lazy" alt="Foto">
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- FOTOS SUBIDAS POR ADMIN (Cloudinary) -->
+                    {% for url in fotos_extra %}
+                    <div class="swiper-slide">
+                        <div class="photo-frame shadow-sm">
+                            <a href="{{ url }}" class="glightbox">
+                                <img src="{{ url }}" 
+                                     class="img-fluid w-100" 
+                                     style="height: 400px; object-fit: cover; border-radius: 8px;" 
+                                     loading="lazy" alt="Foto">
                             </a>
                         </div>
                     </div>
@@ -544,6 +558,7 @@
     </script>
 </body>
 </html>
+
 
 
 
