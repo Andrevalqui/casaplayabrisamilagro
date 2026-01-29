@@ -436,4 +436,55 @@ html {
     }
 }
 
+/* =========================================
+   ESTILOS PARA EL CALENDARIO (VANILLA CALENDAR)
+   ========================================= */
+
+/* Fondo del calendario y letras generales */
+#calendar {
+    color: #2b2b2b !important; /* Forzar color oscuro para los números */
+    background-color: white !important;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/* Marca de día bloqueado con la X gigante */
+.blocked-date-mark {
+    position: relative;
+    background-color: #ffeaea !important; /* Fondo rojo clarito */
+    color: #d9534f !important; /* Número en rojo */
+    font-weight: bold;
+}
+
+.blocked-date-mark::after {
+    content: '❌'; /* El emoji de la X */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    z-index: 5;
+    pointer-events: none; /* Para que la X no moleste al hacer clic */
+    opacity: 0.9;
+}
+
+/* Color del nombre del Mes y el Año (Segmentador) */
+.vc-header__label {
+    color: #c5a47e !important; /* Color dorado como tu web */
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.vc-header__label:hover {
+    color: #2b2b2b !important;
+}
+
+/* Botones de flechas (Siguiente/Anterior) */
+.vc-arrow {
+    background-color: #f8f8f8;
+    border-radius: 50%;
+}
+
+
 
