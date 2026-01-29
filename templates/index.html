@@ -70,6 +70,28 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- === AGREGAR ESTO AQUÍ (NUEVO) === -->
+    <script>
+        function transitionTo(url, message) {
+            let splash = document.querySelector('.premium-splash');
+            if (!splash) {
+                splash = document.createElement('div');
+                splash.className = 'premium-splash';
+                document.body.appendChild(splash);
+            }
+            splash.innerHTML = `
+                <div class="text-center">
+                    <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
+                    <div class="loader-line mx-auto"></div>
+                </div>
+            `;
+            setTimeout(() => { splash.classList.add('active'); }, 50);
+            setTimeout(() => { window.location.href = url; }, 1500);
+        }
+    </script>
+    <!-- ================================= -->
+
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar-menu">
 
@@ -210,38 +232,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.css">
     <!-- Agregar este script antes del final del BODY -->
     <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Obtenemos las fechas desde Python
-            const fechasBloqueadas = {{ bloqueadas | tojson | safe }};
-
-            const calendar = new VanillaCalendar('#calendar', {
-                settings: {
-                    lang: 'es-ES',
-                    selection: {
-                        day: false, // El cliente no elige días
-                        month: true, // PERMITE ELEGIR MES
-                        year: true, // PERMITE ELEGIR AÑO
-                    },
-                    visibility: {
-                        theme: 'light', // Forzamos tema claro
-                        daysOutside: false, // Oculta días del mes anterior/siguiente para no confundir
-                    }
-                },
-                actions: {
-                    // Se ejecuta cada vez que cambias de mes/año o se crea el calendario
-                    getDays(day, date, HTMLElement, self) {
-                        if (fechasBloqueadas.includes(date)) {
-                            HTMLElement.classList.add('blocked-date-mark');
-                            HTMLElement.setAttribute('title', 'Ya reservado');
-                        }
-                    }
-                }
-            });
-            calendar.init();
-        });
-    </script>
 
     <!-- === MEJORA 3: PREGUNTAS FRECUENTES (Ubicado estratégicamente antes de reservar) === -->
     <section id="faq" class="py-5 bg-white">
@@ -497,32 +487,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js"></script>
 
     <script>
-        // === 0. FUNCIÓN DE TRANSICIÓN (NECESARIA PARA EL BOTÓN ADMIN) ===
-        // La colocamos al inicio para asegurar que el botón la encuentre siempre.
-        function transitionTo(url, message) {
-            let splash = document.querySelector('.premium-splash');
-            if (!splash) {
-                splash = document.createElement('div');
-                splash.className = 'premium-splash';
-                document.body.appendChild(splash);
-            }
-
-            splash.innerHTML = `
-                <div class="text-center">
-                    <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
-                    <div class="loader-line mx-auto"></div>
-                </div>
-            `;
-
-            setTimeout(() => {
-                splash.classList.add('active');
-            }, 10);
-
-            setTimeout(() => {
-                window.location.href = url;
-            }, 1500);
-        }
-
+        
         // 1. Splash Screen Inicial (El de carga de la web)
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -574,7 +539,11 @@
 
         // 5. Lógica del Calendario (MUESTRA LAS ❌)
         document.addEventListener('DOMContentLoaded', () => {
-            const fechasBloqueadas = {{ bloqueadas | tojson | safe }};
+            
+            // --- ESTA ES LA CORRECCIÓN DE SEGURIDAD ---
+            let fechasBloqueadas = {{ bloqueadas | tojson | safe }};
+            if (!fechasBloqueadas) fechasBloqueadas = [];
+            // ------------------------------------------
 
             const calendar = new VanillaCalendar('#calendar', {
                 settings: {
@@ -714,5 +683,3 @@
 
 </body>
 </html>
-
-
