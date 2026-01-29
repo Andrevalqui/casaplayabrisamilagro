@@ -1,2 +1,7 @@
 Flask==3.0.0
 gunicorn
+flask-sqlalchemy
+flask-login
+cloudinary
+psycopg2-binary
+werkzeug
