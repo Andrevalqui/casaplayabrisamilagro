@@ -487,7 +487,7 @@
         </a>
     </div>
 
-    <!-- SCRIPTS -->
+<!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
@@ -496,6 +496,32 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js"></script>
 
     <script>
+        // === 0. FUNCIÓN DE TRANSICIÓN (NECESARIA PARA EL BOTÓN ADMIN) ===
+        // La colocamos al inicio para asegurar que el botón la encuentre siempre.
+        function transitionTo(url, message) {
+            let splash = document.querySelector('.premium-splash');
+            if (!splash) {
+                splash = document.createElement('div');
+                splash.className = 'premium-splash';
+                document.body.appendChild(splash);
+            }
+
+            splash.innerHTML = `
+                <div class="text-center">
+                    <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
+                    <div class="loader-line mx-auto"></div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                splash.classList.add('active');
+            }, 10);
+
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1500);
+        }
+
         // 1. Splash Screen Inicial (El de carga de la web)
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -635,13 +661,15 @@
         function initLiveCounter() {
             const badge = document.getElementById('liveCounterBadge');
             const countSpan = document.getElementById('viewerCount');
+            if (!badge || !countSpan) return; // Protección contra errores si no existe el elemento
+
             let minUsers = 3;
             let maxUsers = 20;
             let currentUsers = Math.floor(Math.random() * (maxUsers - minUsers + 1)) + minUsers;
 
             setTimeout(() => {
                 countSpan.innerText = currentUsers;
-                if (badge) badge.style.display = 'flex';
+                badge.style.display = 'flex';
             }, 2000);
 
             setInterval(() => {
@@ -668,54 +696,7 @@
         // 10. MOSTRAR BOTÓN FLOTANTE AL SCROLLEAR
         window.addEventListener('scroll', () => {
             const btnReserva = document.getElementById('btnReservaFlotante');
-            if (window.scrollY > 500) {
-                btnReserva.classList.add('show');
-            } else {
-                btnReserva.classList.remove('show');
-            }
-        });
-    </script>
-
-    <script>
-        // 1. FUNCIÓN PARA TRANSICIONES PREMIUM (SPLASH SCREEN)
-        function transitionTo(url, message) {
-            let splash = document.querySelector('.premium-splash');
-            if (!splash) {
-                splash = document.createElement('div');
-                splash.className = 'premium-splash';
-                document.body.appendChild(splash);
-            }
-
-            splash.innerHTML = `
-                <div class="text-center">
-                    <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
-                    <div class="loader-line mx-auto"></div>
-                </div>
-            `;
-
-            setTimeout(() => {
-                splash.classList.add('active');
-            }, 10);
-
-            setTimeout(() => {
-                window.location.href = url;
-            }, 1500);
-        }
-
-        // 2. LÓGICA DE TÍTULO DINÁMICO (Favicon Re-engagement)
-        let originalTitle = document.title;
-        window.addEventListener('blur', () => {
-            document.title = "¡Te extrañamos! 🌊 Brisa El Milagro";
-        });
-        window.addEventListener('focus', () => {
-            document.title = originalTitle;
-        });
-
-        // 3. MOSTRAR/OCULTAR BOTÓN FLOTANTE AL HACER SCROLL
-        window.addEventListener('scroll', () => {
-            const btnReserva = document.getElementById('btnReservaFlotante');
             if (btnReserva) {
-                // Si el usuario baja más de 500px, el botón aparece
                 if (window.scrollY > 500) {
                     btnReserva.classList.add('show');
                 } else {
@@ -732,6 +713,3 @@
 
 </body>
 </html>
-
-
-
