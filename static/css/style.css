@@ -521,11 +521,20 @@ html {
 }
 
 .splash-logo-text {
-    font-family: 'Great Vibes', cursive;
-    font-size: 4rem;
-    color: var(--color-gold);
-    text-shadow: 0 0 20px rgba(197, 164, 126, 0.5);
+    font-family: 'Great Vibes', cursive !important;
+    font-size: 4.5rem !important; /* Tamaño grande y elegante */
+    color: #c5a47e !important;    /* El dorado Brisa El Milagro */
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.6); 
+    line-height: 1.2;
     margin-bottom: 20px;
+    text-align: center;
+    /* Las fuentes manuscritas se leen mejor en mayúsculas y minúsculas */
+    text-transform: none !important; 
+}
+
+/* Ajuste para celulares */
+@media (max-width: 768px) {
+    .splash-logo-text { font-size: 3rem !important; }
 }
 
 .loader-line {
@@ -603,5 +612,6 @@ html {
     background: #b3936a;
     box-shadow: 0 5px 15px rgba(197, 164, 126, 0.4);
 }
+
 
 
