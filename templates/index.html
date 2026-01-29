@@ -98,15 +98,15 @@
                     <!-- BOTÓN ADMIN EXTREMO DERECHO -->
                     <li class="nav-item ms-lg-3">
                         {% if current_user.is_authenticated %}
-                        <!-- FIX: Cambiado de <button> a <a> y usando url_for -->
-                        <a href="{{ url_for('admin_panel') }}" class="btn btn-gold btn-sm px-3 rounded-pill" onclick="event.preventDefault(); transitionTo(this.href, 'Volviendo al Portal de Edición...')">
-                            <i class="fas fa-edit me-1"></i> VOLVER AL PANEL
-                        </a>
+                        <!-- VISTA: USUARIO LOGUEADO -->
+                        <button class="btn btn-gold btn-sm px-3 rounded-pill" onclick="transitionTo('{{ url_for('admin_panel') }}', 'Volviendo al Portal de Edición...')">
+                            <i class="fas fa-edit me-1"></i> VOLVER AL PANEL DE EDICIÓN
+                        </button>
                         {% else %}
-                        <!-- FIX: Cambiado de <button> a <a> para asegurar la navegación -->
-                        <a href="{{ url_for('login') }}" class="btn btn-outline-warning btn-sm px-3 rounded-pill" onclick="event.preventDefault(); transitionTo(this.href, 'Iniciando Acceso Seguro...')">
+                        <!-- VISTA: USUARIO NO LOGUEADO (ADMIN) -->
+                        <button class="btn btn-outline-warning btn-sm px-3 rounded-pill" onclick="transitionTo('{{ url_for('login') }}', 'Iniciando Acceso Seguro...')">
                             <i class="fas fa-user-lock me-1"></i> ADMIN
-                        </a>
+                        </button>
                         {% endif %}
                     </li>
                 </ul>
@@ -713,3 +713,4 @@
 
 </body>
 </html>
+
