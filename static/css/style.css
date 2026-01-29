@@ -437,15 +437,20 @@ html {
 }
 
 /* =========================================
-   NUEVOS AJUSTES PARA EL CALENDARIO (LIMPIEZA)
+   AJUSTES DE CALENDARIO (LIMPIEZA Y TAMAÑO XL)
    ========================================= */
 
-/* 1. Forzar fondo blanco y letras oscuras en todo el calendario */
+/* 1. Forzar fondo blanco y letras oscuras + AUMENTO DE TAMAÑO */
 #calendar {
     color: #2b2b2b !important; 
     background-color: white !important;
     border: 1px solid #eee;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    /* Nuevas dimensiones */
+    max-width: 600px !important; 
+    width: 100% !important;
+    padding: 25px !important;
+    border-radius: 20px !important;
 }
 
 /* 2. Quitar el color rojo default de Sábado y Domingo */
@@ -467,32 +472,65 @@ html {
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
-    font-size: 1.1rem !important;
+    font-size: 1.8rem !important; /* X más grande */
     z-index: 10 !important;
     pointer-events: none;
     opacity: 0.9;
 }
 
-/* 4. Mejorar los segmentadores (Mes y Año en la cabecera) */
+/* 4. Mejorar los segmentadores (Mes y Año) y aumentar tamaño */
 .vc-header__label {
     color: var(--color-gold) !important;
     font-weight: 600 !important;
     text-transform: uppercase;
     letter-spacing: 1px;
-    padding: 4px 8px;
+    padding: 6px 12px;
     border-radius: 4px;
     transition: background 0.3s;
+    font-size: 1.5rem !important; /* Mes y Año más grandes */
 }
 
 .vc-header__label:hover {
     background: #fdfaf5 !important;
 }
 
+/* 5. Aumentar tamaño de los nombres de los días (Lun, Mar...) */
+.vc-week {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #666 !important;
+}
+
+/* 6. Aumentar tamaño de los números de los días */
+.vc-day__content {
+    font-size: 1.2rem !important;
+    height: 55px !important; /* Celdas más grandes */
+    width: 55px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Estilo para los botones de navegación */
 .vc-arrow {
     background-color: transparent !important;
-    width: 32px !important;
-    height: 32px !important;
+    width: 40px !important;
+    height: 40px !important;
+}
+
+/* AJUSTE RESPONSIVO PARA MÓVILES */
+@media (max-width: 500px) {
+    #calendar {
+        padding: 10px !important;
+    }
+    .vc-day__content {
+        font-size: 1rem !important;
+        height: 40px !important;
+        width: 40px !important;
+    }
+    .vc-header__label {
+        font-size: 1.2rem !important;
+    }
 }
 
 /* =========================================
@@ -610,6 +648,7 @@ html {
     background: #b3936a;
     box-shadow: 0 5px 15px rgba(197, 164, 126, 0.4);
 }
+
 
 
 
