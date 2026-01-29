@@ -78,14 +78,14 @@
                     <!-- BOTÓN ADMIN EXTREMO DERECHO -->
                     <li class="nav-item ms-lg-3">
                         {% if current_user.is_authenticated %}
-                            <a class="btn btn-gold btn-sm px-3 rounded-pill" href="javascript:void(0)" onclick="transitionTo('/admin', 'VOLVIENDO AL PANEL DE EDICIÓN...')">
-                                <i class="fas fa-arrow-left me-1"></i> VOLVER AL PANEL DE EDICIÓN
-                            </a>
+                            <button class="btn btn-gold btn-sm px-3 rounded-pill" onclick="transitionTo('/admin', 'VOLVIENDO AL PORTAL DE EDICIÓN...')">
+                                <i class="fas fa-edit me-1"></i> VOLVER AL PANEL DE EDICIÓN
+                            </button>
                         {% else %}
                             <!-- Si NO ha iniciado sesión, aparece ADMIN -->
-                            <a class="btn btn-outline-warning btn-sm px-3 rounded-pill" href="javascript:void(0)" onclick="transitionTo('/login', 'INICIANDO ACCESO SEGURO...')">
+                            <button class="btn btn-outline-warning btn-sm px-3 rounded-pill" onclick="transitionTo('/login', 'INICIANDO ACCESO SEGURO...')">
                                 <i class="fas fa-user-lock me-1"></i> ADMIN
-                            </a>
+                            </button>
                         {% endif %}
                     </li>
                 </ul>
@@ -511,21 +511,6 @@
             calendar.init();
         });
 
-        // 6. Función para transiciones premium con Splash Screen
-        function transitionTo(url, message) {
-            const splash = document.createElement('div');
-            splash.className = 'premium-splash';
-            splash.innerHTML = `
-                <div class="text-center">
-                    <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
-                    <div class="loader-line mx-auto"></div>
-                </div>
-            `;
-            document.body.appendChild(splash);
-            setTimeout(() => { splash.style.opacity = '1'; }, 10);
-            setTimeout(() => { window.location.href = url; }, 1500);
-        }
-
         // === 7. FUNCIONES DE ENVÍO WHATSAPP DIRECTO ===
         const OWNER_PHONE = "{{ info.whatsapp }}";
 
@@ -592,25 +577,31 @@
     </script>
 
     <script>
-    // Función para transiciones premium con Splash Screen
     function transitionTo(url, message) {
-        // 1. Crear el splash screen dinámicamente
-        const splash = document.createElement('div');
-        splash.className = 'premium-splash';
+        // 1. Buscamos el splash que definiste en tu CSS
+        let splash = document.querySelector('.premium-splash');
+        
+        // 2. Si no existe en el HTML, lo creamos rápido
+        if (!splash) {
+            splash = document.createElement('div');
+            splash.className = 'premium-splash';
+            document.body.appendChild(splash);
+        }
+
+        // 3. Ponemos el mensaje y el loader que ya tienes diseñado
         splash.innerHTML = `
             <div class="text-center">
                 <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
                 <div class="loader-line mx-auto"></div>
             </div>
         `;
-        document.body.appendChild(splash);
 
-        // 2. Animación de entrada (Fade In)
+        // 4. ACTIVAMOS EL SPLASH (Aquí es donde el CSS hace opacity: 1)
         setTimeout(() => {
-            splash.style.opacity = '1';
+            splash.classList.add('active');
         }, 10);
 
-        // 3. Redirección después de un breve momento para que se vea el splash
+        // 5. Redirigimos después de 1.5 segundos
         setTimeout(() => {
             window.location.href = url;
         }, 1500);
@@ -619,3 +610,4 @@
     
 </body>
 </html>
+
