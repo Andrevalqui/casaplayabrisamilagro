@@ -195,11 +195,18 @@ def desbloquear_fecha(id):
 with app.app_context():
     try:
         db.create_all()
+        # Crear admin original
         if not User.query.filter_by(username='admin').first():
             db.session.add(User(username='admin', password=generate_password_hash('Brisa2025')))
             db.session.commit()
+            
+        # NUEVO: Crear usuario BrunoTapia
+        if not User.query.filter_by(username='BrunoTapia').first():
+            bruno_user = User(username='BrunoTapia', password=generate_password_hash('Tapia123*'))
+            db.session.add(bruno_user)
+            db.session.commit()
+            print("Usuario BrunoTapia creado con éxito")
+            
     except Exception as e:
-        print(f"Error inicializando base de datos: {e}")
+        print(f"Error: {e}")
 
-if __name__ == '__main__':
-    app.run(debug=True)
