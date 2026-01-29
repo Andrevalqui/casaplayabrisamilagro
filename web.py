@@ -97,22 +97,20 @@ FAQS = [
 
 @app.route('/')
 def home():
-    # Galería estática (la que ya tienes en el repo)
+    # 1. Galería estática: Obtenemos SOLO los nombres de archivos (como foto1.jpg)
     carpeta_img = os.path.join(app.root_path, 'static', 'img')
     galeria_estatica = []
     if os.path.exists(carpeta_img):
         archivos = os.listdir(carpeta_img)
         ext_validas = ('.jpg', '.jpeg', '.png', '.webp')
-        galeria_estatica = [url_for('static', filename='img/' + img) for img in archivos if img.lower().endswith(ext_validas)]
+        # Guardamos solo el nombre para que tu url_for del HTML funcione
+        galeria_estatica = [img for img in archivos if img.lower().endswith(ext_validas)]
     
-    # Galería dinámica (la que subirá el admin a Cloudinary)
+    # 2. Galería dinámica (DB/Cloudinary)
     fotos_db = FotoExtra.query.all()
     galeria_dinamica = [f.url for f in fotos_db]
     
-    # Combinar ambas galerías
-    galeria_total = galeria_estatica + galeria_dinamica
-    
-    # Fechas bloqueadas
+    # 3. Fechas bloqueadas
     bloqueadas = [b.fecha for b in FechaBloqueada.query.all()]
     
     mensaje = f"Hola, vi la web de {CASA_INFO['nombre']} y quisiera información."
@@ -123,7 +121,8 @@ def home():
                            servicios=SERVICIOS, 
                            reviews=TESTIMONIOS,
                            faqs=FAQS,
-                           galeria=galeria_total, # Usamos la lista combinada
+                           galeria=galeria_estatica,   # Nombres de archivos locales
+                           fotos_extra=galeria_dinamica, # URLs de Cloudinary
                            bloqueadas=bloqueadas,
                            ws_link=ws_link,
                            anio=datetime.now().year)
@@ -206,4 +205,5 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
