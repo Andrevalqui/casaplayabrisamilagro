@@ -78,12 +78,12 @@
                     <!-- BOTÓN ADMIN EXTREMO DERECHO -->
                     <li class="nav-item ms-lg-3">
                         {% if current_user.is_authenticated %}
-                            <button class="btn btn-gold btn-sm px-3 rounded-pill" onclick="transitionTo('/admin', 'VOLVIENDO AL PORTAL DE EDICIÓN...')">
+                            <button class="btn btn-gold btn-sm px-3 rounded-pill" onclick="transitionTo('/admin', 'Volviendo al Portal de Edición...')">
                                 <i class="fas fa-edit me-1"></i> VOLVER AL PANEL DE EDICIÓN
                             </button>
                         {% else %}
                             <!-- Si NO ha iniciado sesión, aparece ADMIN -->
-                            <button class="btn btn-outline-warning btn-sm px-3 rounded-pill" onclick="transitionTo('/login', 'INICIANDO ACCESO SEGURO...')">
+                            <button class="btn btn-outline-warning btn-sm px-3 rounded-pill" onclick="transitionTo('/login', 'Iniciando Acceso Seguro...')">
                                 <i class="fas fa-user-lock me-1"></i> ADMIN
                             </button>
                         {% endif %}
@@ -610,5 +610,6 @@
     
 </body>
 </html>
+
 
 
