@@ -134,7 +134,9 @@ def login():
             login_user(user)
             return redirect(url_for('admin_panel'))
         flash('Credenciales incorrectas')
-    return render_template('login.html')
+    
+    # IMPORTANTE: Debemos pasar info=CASA_INFO para que el HTML no de error
+    return render_template('login.html', info=CASA_INFO)
 
 @app.route('/logout')
 @login_required
@@ -209,6 +211,7 @@ with app.app_context():
             
     except Exception as e:
         print(f"Error: {e}")
+
 
 
 
