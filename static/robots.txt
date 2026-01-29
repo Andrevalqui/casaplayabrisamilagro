@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /login
 
-Sitemap: https://casaplayabrisamilagro.vercel.app/sitemap.xml
+Sitemap: https://casaplayabrisamilagro-w97l.vercel.app/sitemap.xml
