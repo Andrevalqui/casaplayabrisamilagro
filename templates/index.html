@@ -460,21 +460,25 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Librería del calendario -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js"></script>
 
     <script>
-        // 1. Splash Screen
+        // 1. Splash Screen Inicial (El de carga de la web)
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash');
-                splash.classList.add('splash-hidden');
-                setTimeout(() => { splash.style.display = 'none'; }, 1000);
+                if(splash){
+                    splash.classList.add('splash-hidden');
+                    setTimeout(() => { splash.style.display = 'none'; }, 1000);
+                }
             }, 2500);
         });
 
-        // 2. Animaciones
+        // 2. Animaciones AOS
         AOS.init({ duration: 1000, once: true });
 
-        // 3. Swiper
+        // 3. Swiper Galería
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 1, spaceBetween: 20, loop: true,
             pagination: { el: ".swiper-pagination", clickable: true },
@@ -482,12 +486,47 @@
             breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
         });
 
-        // 4. Lightbox
+        // 4. Lightbox (Zoom fotos)
         const lightbox = GLightbox({ touchNavigation: true, loop: true, autoplayVideos: true });
 
-        // === 5. FUNCIONES DE ENVÍO WHATSAPP DIRECTO ===
-        
-        // Número del dueño obtenido desde Python
+        // 5. Lógica del Calendario (MUESTRA LAS ❌)
+        document.addEventListener('DOMContentLoaded', () => {
+            const fechasBloqueadas = {{ bloqueadas | tojson | safe }};
+            
+            const calendar = new VanillaCalendar('#calendar', {
+                settings: {
+                    lang: 'es-ES',
+                    selection: { day: false, month: true, year: true },
+                    visibility: { theme: 'light', daysOutside: false }
+                },
+                actions: {
+                    getDays(day, date, HTMLElement, self) {
+                        if (fechasBloqueadas.includes(date)) {
+                            HTMLElement.classList.add('blocked-date-mark');
+                            HTMLElement.setAttribute('title', 'Ya reservado');
+                        }
+                    }
+                }
+            });
+            calendar.init();
+        });
+
+        // 6. Función para transiciones premium con Splash Screen
+        function transitionTo(url, message) {
+            const splash = document.createElement('div');
+            splash.className = 'premium-splash';
+            splash.innerHTML = `
+                <div class="text-center">
+                    <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
+                    <div class="loader-line mx-auto"></div>
+                </div>
+            `;
+            document.body.appendChild(splash);
+            setTimeout(() => { splash.style.opacity = '1'; }, 10);
+            setTimeout(() => { window.location.href = url; }, 1500);
+        }
+
+        // === 7. FUNCIONES DE ENVÍO WHATSAPP DIRECTO ===
         const OWNER_PHONE = "{{ info.whatsapp }}";
 
         function enviarReserva() {
@@ -507,18 +546,7 @@
             }
 
             let msg = `*SOLICITUD DE RESERVA - ${nombre.toUpperCase()}*\n\n`;
-            msg += `👤 *Cliente:* ${nombre} ${apellido}\n`;
-            msg += `📞 *Celular:* ${celular}\n`;
-            msg += `📱 *WhatsApp Contacto:* ${ws_contacto}\n`;
-            msg += `📧 *Email:* ${email}\n`;
-            msg += `--------------------------------\n`;
-            msg += `📅 *Fecha Llegada:* ${fecha}\n`;
-            msg += `🕒 *Estadía:* ${dias}\n`;
-            msg += `👥 *Adultos:* ${adultos} | *Niños:* ${ninos}\n`;
-            msg += `--------------------------------\n`;
-            msg += `Hola, me gustaría reservar la casa de playa con estos detalles.`;
-
-            // Abre WhatsApp directamente
+            msg += `👤 *Cliente:* ${nombre} ${apellido}\n📞 *Celular:* ${celular}\n📱 *WhatsApp:* ${ws_contacto}\n📧 *Email:* ${email}\n--------------------------------\n📅 *Llegada:* ${fecha}\n🕒 *Estadía:* ${dias}\n👥 *Adultos:* ${adultos} | *Niños:* ${ninos}\n--------------------------------\nHola, me gustaría reservar la casa de playa con estos detalles.`;
             window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -533,41 +561,24 @@
             }
 
             let starText = "★".repeat(estrellas);
-            
-            let msg = `*NUEVA OPINIÓN PARA REVISIÓN*\n\n`;
-            msg += `👤 *Nombre:* ${nombre}\n`;
-            msg += `⭐ *Calificación:* ${starText} (${estrellas}/5)\n`;
-            msg += `💬 *Opinión:* ${mensaje}\n\n`;
-            msg += `_Hola, envío mi opinión para que sea revisada._`;
-
-            // Limpiar formulario
+            let msg = `*NUEVA OPINIÓN PARA REVISIÓN*\n\n👤 *Nombre:* ${nombre}\n⭐ *Calificación:* ${starText} (${estrellas}/5)\n💬 *Opinión:* ${mensaje}\n\n_Hola, envío mi opinión para que sea revisada._`;
             document.getElementById('formOpinion').reset();
-
-            // Abrir WhatsApp directamente
             window.open(`https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // === 6. LÓGICA DE VISITANTES EN VIVO (Del paso anterior) ===
+        // === 8. LÓGICA DE VISITANTES EN VIVO ===
         function initLiveCounter() {
             const badge = document.getElementById('liveCounterBadge');
             const countSpan = document.getElementById('viewerCount');
-            
-            // Rango de personas (ej: entre 3 y 12)
-            let minUsers = 3;
-            let maxUsers = 20;
-            
-            // Generar número inicial
+            let minUsers = 3; let maxUsers = 20;
             let currentUsers = Math.floor(Math.random() * (maxUsers - minUsers + 1)) + minUsers;
             
-            // Mostrar el badge después de 2 segundos de carga para no saturar
             setTimeout(() => {
                 countSpan.innerText = currentUsers;
-                badge.style.display = 'flex'; // Mostrar badge
+                if(badge) badge.style.display = 'flex';
             }, 2000);
 
-            // Función para actualizar el número aleatoriamente
             setInterval(() => {
-                // Decidir si sube o baja (50% probabilidad)
                 const change = Math.random() > 0.5 ? 1 : -1;
                 let nextUsers = currentUsers + change;
                 if (nextUsers < minUsers) nextUsers = minUsers + 1;
@@ -604,23 +615,7 @@
             window.location.href = url;
         }, 1500);
     }
-</script>
+    </script>
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
