@@ -1,10 +1,49 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+import cloudinary
+import cloudinary.uploader
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'brisa_milagro_key_2025')
 
-# DATOS DE LA CASA
+# CONFIGURACIÓN DE BASE DE DATOS (Postgres para Vercel / SQLite local)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///database.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
+# CONFIGURACIÓN DE CLOUDINARY (Para subida de fotos)
+cloudinary.config(
+  cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'),
+  api_key = os.environ.get('CLOUDINARY_API_KEY'),
+  api_secret = os.environ.get('CLOUDINARY_API_SECRET')
+)
+
+# --- MODELOS DE BASE DE DATOS ---
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+
+class FotoExtra(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(500), nullable=False)
+
+class FechaBloqueada(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    fecha = db.Column(db.String(10), unique=True, nullable=False) # YYYY-MM-DD
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# DATOS DE LA CASA (Tu lógica original intacta)
 CASA_INFO = {
     "nombre": "Brisa el Milagro",
     "ubicacion": "Balneario El Milagro, Pacasmayo",
@@ -44,13 +83,23 @@ FAQS = [
 
 @app.route('/')
 def home():
+    # Galería estática (la que ya tienes en el repo)
     carpeta_img = os.path.join(app.root_path, 'static', 'img')
-    galeria = []
-    
+    galeria_estatica = []
     if os.path.exists(carpeta_img):
         archivos = os.listdir(carpeta_img)
         ext_validas = ('.jpg', '.jpeg', '.png', '.webp')
-        galeria = [img for img in archivos if img.lower().endswith(ext_validas)]
+        galeria_estatica = [url_for('static', filename='img/' + img) for img in archivos if img.lower().endswith(ext_validas)]
+    
+    # Galería dinámica (la que subirá el admin a Cloudinary)
+    fotos_db = FotoExtra.query.all()
+    galeria_dinamica = [f.url for f in fotos_db]
+    
+    # Combinar ambas galerías
+    galeria_total = galeria_estatica + galeria_dinamica
+    
+    # Fechas bloqueadas
+    bloqueadas = [b.fecha for b in FechaBloqueada.query.all()]
     
     mensaje = f"Hola, vi la web de {CASA_INFO['nombre']} y quisiera información."
     ws_link = f"https://wa.me/{CASA_INFO['whatsapp']}?text={mensaje.replace(' ', '%20')}"
@@ -60,13 +109,86 @@ def home():
                            servicios=SERVICIOS, 
                            reviews=TESTIMONIOS,
                            faqs=FAQS,
-                           galeria=galeria,
+                           galeria=galeria_total, # Usamos la lista combinada
+                           bloqueadas=bloqueadas,
                            ws_link=ws_link,
                            anio=datetime.now().year)
 
+# --- RUTAS DE ADMINISTRACIÓN ---
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        user = User.query.filter_by(username=request.form['username']).first()
+        if user and check_password_hash(user.password, request.form['password']):
+            login_user(user)
+            return redirect(url_for('admin_panel'))
+        flash('Credenciales incorrectas')
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+@app.route('/admin')
+@login_required
+def admin_panel():
+    fotos = FotoExtra.query.all()
+    fechas = FechaBloqueada.query.all()
+    return render_template('admin.html', fotos=fotos, fechas=fechas)
+
+@app.route('/admin/subir', methods=['POST'])
+@login_required
+def subir_foto():
+    file = request.files['archivo']
+    if file:
+        # Subir a Cloudinary
+        res = cloudinary.uploader.upload(file)
+        nueva_foto = FotoExtra(url=res['secure_url'])
+        db.session.add(nueva_foto)
+        db.session.commit()
+    return redirect(url_for('admin_panel'))
+
+@app.route('/admin/eliminar-foto/<int:id>')
+@login_required
+def eliminar_foto(id):
+    foto = FotoExtra.query.get(id)
+    if foto:
+        db.session.delete(foto)
+        db.session.commit()
+    return redirect(url_for('admin_panel'))
+
+@app.route('/admin/bloquear', methods=['POST'])
+@login_required
+def bloquear_fecha():
+    fecha = request.form.get('fecha')
+    if fecha:
+        existe = FechaBloqueada.query.filter_by(fecha=fecha).first()
+        if not existe:
+            nueva = FechaBloqueada(fecha=fecha)
+            db.session.add(nueva)
+            db.session.commit()
+    return redirect(url_for('admin_panel'))
+
+@app.route('/admin/desbloquear/<int:id>')
+@login_required
+def desbloquear_fecha(id):
+    fecha = FechaBloqueada.query.get(id)
+    if fecha:
+        db.session.delete(fecha)
+        db.session.commit()
+    return redirect(url_for('admin_panel'))
+
+# Inicializar Base de Datos
+with app.app_context():
+    db.create_all()
+    # Crear admin por defecto si no existe (Usuario: admin | Pass: Brisa2025)
+    if not User.query.filter_by(username='admin').first():
+        admin_user = User(username='admin', password=generate_password_hash('Brisa2025'))
+        db.session.add(admin_user)
+        db.session.commit()
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
