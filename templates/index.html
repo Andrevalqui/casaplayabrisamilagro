@@ -620,44 +620,62 @@
     </script>
 
     <script>
-    function transitionTo(url, message) {
-        // 1. Buscamos el splash que definiste en tu CSS
-        let splash = document.querySelector('.premium-splash');
-        
-        // 2. Si no existe en el HTML, lo creamos rápido
-        if (!splash) {
-            splash = document.createElement('div');
-            splash.className = 'premium-splash';
-            document.body.appendChild(splash);
+        // 1. FUNCIÓN PARA TRANSICIONES PREMIUM (SPLASH SCREEN)
+        function transitionTo(url, message) {
+            let splash = document.querySelector('.premium-splash');
+            if (!splash) {
+                splash = document.createElement('div');
+                splash.className = 'premium-splash';
+                document.body.appendChild(splash);
+            }
+
+            splash.innerHTML = `
+                <div class="text-center">
+                    <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
+                    <div class="loader-line mx-auto"></div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                splash.classList.add('active');
+            }, 10);
+
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1500);
         }
 
-        // 3. Ponemos el mensaje y el loader que ya tienes diseñado
-        splash.innerHTML = `
-            <div class="text-center">
-                <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
-                <div class="loader-line mx-auto"></div>
-            </div>
-        `;
+        // 2. LÓGICA DE TÍTULO DINÁMICO (Favicon Re-engagement)
+        let originalTitle = document.title;
+        window.addEventListener('blur', () => {
+            document.title = "¡Te extrañamos! 🌊 Brisa El Milagro";
+        });
+        window.addEventListener('focus', () => {
+            document.title = originalTitle;
+        });
 
-        // 4. ACTIVAMOS EL SPLASH (Aquí es donde el CSS hace opacity: 1)
-        setTimeout(() => {
-            splash.classList.add('active');
-        }, 10);
-
-        // 5. Redirigimos después de 1.5 segundos
-        setTimeout(() => {
-            window.location.href = url;
-        }, 1500);
-    }
+        // 3. MOSTRAR/OCULTAR BOTÓN FLOTANTE AL HACER SCROLL
+        window.addEventListener('scroll', () => {
+            const btnReserva = document.getElementById('btnReservaFlotante');
+            if (btnReserva) {
+                // Si el usuario baja más de 500px, el botón aparece
+                if (window.scrollY > 500) {
+                    btnReserva.classList.add('show');
+                } else {
+                    btnReserva.classList.remove('show');
+                }
+            }
+        });
     </script>
 
-<!-- BOTÓN FLOTANTE DE RESERVA (Solo Desktop) -->
-<a href="#reserva" class="floating-reserve-btn d-none d-lg-flex" id="btnReservaFlotante">
-    <i class="fas fa-calendar-check me-2"></i> RESERVAR AHORA
-</a>
+    <!-- BOTÓN FLOTANTE DE RESERVA (Solo Desktop) -->
+    <a href="#reserva" class="floating-reserve-btn d-none d-lg-flex" id="btnReservaFlotante">
+        <i class="fas fa-calendar-check me-2"></i> RESERVAR AHORA
+    </a>
     
 </body>
 </html>
+
 
 
 
