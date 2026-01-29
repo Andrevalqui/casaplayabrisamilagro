@@ -295,7 +295,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold small">Días de hospedaje *</label>
-                                        <select class="form-select" id="res_dias" required>
+                                        <select class="form-select" id="res_dias" required onchange="toggleEspecificar()">
                                             <option value="" selected>Seleccione...</option>
                                             <option value="1 Día (Full Day)">1 Día (Full Day)</option>
                                             <option value="2 Días / 1 Noche">2 Días / 1 Noche</option>
@@ -303,6 +303,10 @@
                                             <option value="Semana Completa">Semana Completa</option>
                                             <option value="Otro">Otro (Especificar)</option>
                                         </select>
+
+                                        <div id="div_especificar" class="mt-2" style="display: none;">
+                                            <input type="text" class="form-control" id="res_dias_especificar" placeholder="¿Cuántos días o semanas?">
+                                        </div>
                                     </div>
 
                                     <div class="col-md-6">
@@ -511,6 +515,18 @@
             calendar.init();
         });
 
+        function toggleEspecificar() {
+            const selectDias = document.getElementById('res_dias');
+            const divEspecificar = document.getElementById('div_especificar');
+    
+            if (selectDias.value === 'Otro') {
+                divEspecificar.style.display = 'block';
+                document.getElementById('res_dias_especificar').focus();
+            } else {
+                divEspecificar.style.display = 'none';
+            }
+        }
+
         // === 7. FUNCIONES DE ENVÍO WHATSAPP DIRECTO ===
         const OWNER_PHONE = "{{ info.whatsapp }}";
 
@@ -522,6 +538,11 @@
             let email = document.getElementById('res_email').value || "No indicado";
             let fecha = document.getElementById('res_fecha').value || "Por definir";
             let dias = document.getElementById('res_dias').value;
+            // Si eligió "Otro", capturamos lo que escribió en el cuadro de texto
+            if (dias === 'Otro') {
+                const detalleOtro = document.getElementById('res_dias_especificar').value;
+                dias = detalleOtro ? `Otro: ${detalleOtro}` : "Otro (No especificado)";
+            }
             let adultos = document.getElementById('res_adultos').value;
             let ninos = document.getElementById('res_ninos').value;
 
@@ -610,6 +631,7 @@
     
 </body>
 </html>
+
 
 
 
