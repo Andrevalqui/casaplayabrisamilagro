@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -92,6 +92,20 @@ FAQS = [
     {"pregunta": "¿Cómo reservo?", "respuesta": "Con el 50% de adelanto vía transferencia o Yape/Plin."}
 ]
 
+# --- NUEVA RUTA SITEMAP PARA GOOGLE ---
+@app.route('/sitemap.xml')
+def sitemap():
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+        <url>
+            <loc>https://casaplayabrisamilagro-w97l.vercel.app/</loc>
+            <lastmod>{datetime.now().strftime('%Y-%m-%d')}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>1.0</priority>
+        </url>
+    </urlset>"""
+    return Response(xml, mimetype='application/xml')
+    
 @app.route('/')
 def home():
     # 1. Galería estática: Obtenemos SOLO los nombres de archivos (como foto1.jpg)
@@ -211,7 +225,3 @@ with app.app_context():
             
     except Exception as e:
         print(f"Error: {e}")
-
-
-
-
