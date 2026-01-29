@@ -578,25 +578,37 @@
         }
 
         initLiveCounter();
-
-        function transitionTo(url, message) {
-            const s = document.createElement('div');
-            s.className = 'premium-splash';
-            s.style.opacity = '0';
-            s.innerHTML = `<h1 class="splash-logo-text" style="font-size:2rem">${message}</h1><div class="loader-line"></div>`;
-            document.body.appendChild(s);
-            
-            // Pequeño delay para que la animación se note
-            setTimeout(() => {
-                s.style.opacity = '1';
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 1200);
-            }, 50);
-        }
     </script>
+
+    <script>
+    // Función para transiciones premium con Splash Screen
+    function transitionTo(url, message) {
+        // 1. Crear el splash screen dinámicamente
+        const splash = document.createElement('div');
+        splash.className = 'premium-splash';
+        splash.innerHTML = `
+            <div class="text-center">
+                <h1 class="splash-logo-text" style="font-size: 2.5rem;">${message}</h1>
+                <div class="loader-line mx-auto"></div>
+            </div>
+        `;
+        document.body.appendChild(splash);
+
+        // 2. Animación de entrada (Fade In)
+        setTimeout(() => {
+            splash.style.opacity = '1';
+        }, 10);
+
+        // 3. Redirección después de un breve momento para que se vea el splash
+        setTimeout(() => {
+            window.location.href = url;
+        }, 1500);
+    }
+</script>
+    
 </body>
 </html>
+
 
 
 
