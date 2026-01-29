@@ -505,13 +505,11 @@ html {
     top: 0; left: 0; width: 100%; height: 100%;
     background: #1a1a1a;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 10000;
     opacity: 0; 
-    pointer-events: none; 
-    
+    pointer-events: none;
     transition: opacity 0.8s ease;
 }
 
@@ -520,21 +518,21 @@ html {
     pointer-events: all;
 }
 
+/* Estilo exacto del Splash de Bienvenida */
 .splash-logo-text {
     font-family: 'Great Vibes', cursive !important;
-    font-size: 4.5rem !important; /* Tamaño grande y elegante */
-    color: #c5a47e !important;    /* El dorado Brisa El Milagro */
-    text-shadow: 2px 2px 15px rgba(0,0,0,0.6); 
-    line-height: 1.2;
-    margin-bottom: 20px;
+    font-size: 6rem !important; /* Grande y exquisito */
+    color: #c5a47e !important;    /* Dorado Brisa */
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.8); /* Sombra profunda */
+    line-height: 1.1;
     text-align: center;
-    /* Las fuentes manuscritas se leen mejor en mayúsculas y minúsculas */
-    text-transform: none !important; 
+    text-transform: none !important; /* Importante: la cursiva no se usa en mayúsculas */
+    margin: 0;
+    padding: 20px;
 }
 
-/* Ajuste para celulares */
 @media (max-width: 768px) {
-    .splash-logo-text { font-size: 3rem !important; }
+    .splash-logo-text { font-size: 3.5rem !important; }
 }
 
 .loader-line {
@@ -612,6 +610,7 @@ html {
     background: #b3936a;
     box-shadow: 0 5px 15px rgba(197, 164, 126, 0.4);
 }
+
 
 
 
