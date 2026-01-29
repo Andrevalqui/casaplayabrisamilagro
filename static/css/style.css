@@ -649,8 +649,36 @@ html {
     box-shadow: 0 5px 15px rgba(197, 164, 126, 0.4);
 }
 
+/* =========================================
+   BOTÓN FLOTANTE DE RESERVA PREMIUM
+   ========================================= */
+.floating-reserve-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 30px; /* Al lado opuesto de los iconos de redes */
+    background: var(--color-gold);
+    color: white !important;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    z-index: 998;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transition: all 0.5s ease;
+    opacity: 0; /* Invisible al inicio */
+    transform: translateY(20px);
+}
 
+.floating-reserve-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-
-
-
+.floating-reserve-btn:hover {
+    background: #1a1a1a;
+    color: var(--color-gold) !important;
+    box-shadow: 0 15px 30px rgba(197, 164, 126, 0.4);
+    transform: scale(1.05);
+}
