@@ -5,38 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ info.nombre }} | Casa de Playa Exclusiva</title>
     
-    <!-- METADATOS -->
+    <!-- METADATOS EXISTENTES (RESPETADOS AL 100%) -->
     <meta property="og:title" content="{{ info.nombre }} - Tu Refugio frente al Mar">
-    <meta property="og:description" content="Piscina privada, zona de parrilla y la mejor vista en Pacasmayo. Reserva tu experiencia inolvidable.">
+    <meta property="og:description" content="Piscina privada, zona de parrilla y la mejor vista en El Milagro. Reserva tu experiencia inolvidable.">
     <meta property="og:image" content="{{ url_for('static', filename='img/foto1.jpg', _external=True) }}">
     <meta property="og:url" content="https://casaplayabrisamilagro.vercel.app">
     <meta name="theme-color" content="#c5a47e">
-    <meta name="description" content="Brisa el Milagro: La casa de playa más exclusiva de Pacasmayo. Piscina privada, zona de parrilla, frente al mar. Reserva hoy una experiencia inolvidable.">
-    <meta name="keywords" content="casa de playa pacasmayo, alquiler casa de playa peru, brisa el milagro, hospedaje pacasmayo, casa con piscina pacasmayo">
+    <meta name="description" content="Brisa el Milagro: La casa de playa más exclusiva de El Milagro. Piscina privada, zona de parrilla, frente al mar. Reserva hoy una experiencia inolvidable.">
+    <meta name="keywords" content="casa de playa pacasmayo, alquiler casa de playa peru, brisa el milagro, hospedaje pacasmayo, casa con piscina el milagro">
+
+    <!-- ADICIONES SEO PREMIUM (NUEVAS - NO ELIMINAN LO ANTERIOR) -->
+    <meta name="author" content="Brisa el Milagro">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://casaplayabrisamilagro.vercel.app">
+    <meta property="og:type" content="website">
+
+    <!-- TWITTER CARDS (Optimización para compartir en redes) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ info.nombre }} | Alquiler de Casa de Playa en el Milagro">
+    <meta name="twitter:description" content="Piscina privada, parrilla y vista al mar. Reserva una experiencia inolvidable en Brisa el Milagro.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='img/foto1.jpg', _external=True) }}">
 
     <!-- === MEJORA 1: SCHEMA MARKUP (SEO para Google) === -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "LodgingBusiness",
-      "name": "{{ info.nombre }}",
-      "image": "{{ url_for('static', filename='img/foto1.jpg', _external=True) }}",
-      "@id": "https://casaplayabrisamilagro.vercel.app",
-      "url": "https://casaplayabrisamilagro.vercel.app",
-      "telephone": "+51{{ info.whatsapp }}",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Balneario El Milagro",
-        "addressLocality": "Pacasmayo",
-        "addressRegion": "La Libertad",
-        "addressCountry": "PE"
-      },
-      "priceRange": "$$$",
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -7.4553016,
-        "longitude": -79.5761959
-      }
+        "@context": "https://schema.org",
+        "@type": "LodgingBusiness",
+        "name": "{{ info.nombre }}",
+        "image": "{{ url_for('static', filename='img/foto1.jpg', _external=True) }}",
+        "@id": "https://casaplayabrisamilagro.vercel.app",
+        "url": "https://casaplayabrisamilagro.vercel.app",
+        "telephone": "+51{{ info.whatsapp }}",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Balneario El Milagro",
+            "addressLocality": "Pacasmayo",
+            "addressRegion": "La Libertad",
+            "addressCountry": "PE"
+        },
+        "priceRange": "$$$",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -7.4553016,
+            "longitude": -79.5761959
+        }
     }
     </script>
 
@@ -48,7 +60,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=17">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
@@ -76,18 +88,18 @@
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#faq">Preguntas</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#reserva">Haz tu Reserva</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase small ls-1" href="#testimonios">Opiniones</a></li>
-                    
+
                     <!-- BOTÓN ADMIN EXTREMO DERECHO -->
                     <li class="nav-item ms-lg-3">
                         {% if current_user.is_authenticated %}
-                            <button class="btn btn-gold btn-sm px-3 rounded-pill" onclick="transitionTo('/admin', 'Volviendo al Portal de Edición...')">
-                                <i class="fas fa-edit me-1"></i> VOLVER AL PANEL DE EDICIÓN
-                            </button>
+                        <button class="btn btn-gold btn-sm px-3 rounded-pill" onclick="transitionTo('/admin', 'Volviendo al Portal de Edición...')">
+                            <i class="fas fa-edit me-1"></i> VOLVER AL PANEL DE EDICIÓN
+                        </button>
                         {% else %}
-                            <!-- Si NO ha iniciado sesión, aparece ADMIN -->
-                            <button class="btn btn-outline-warning btn-sm px-3 rounded-pill" onclick="transitionTo('/login', 'Iniciando Acceso Seguro...')">
-                                <i class="fas fa-user-lock me-1"></i> ADMIN
-                            </button>
+                        <!-- Si NO ha iniciado sesión, aparece ADMIN -->
+                        <button class="btn btn-outline-warning btn-sm px-3 rounded-pill" onclick="transitionTo('/login', 'Iniciando Acceso Seguro...')">
+                            <i class="fas fa-user-lock me-1"></i> ADMIN
+                        </button>
                         {% endif %}
                     </li>
                 </ul>
@@ -148,9 +160,10 @@
                         <div class="photo-frame shadow-sm">
                             <a href="{{ url_for('static', filename='img/' + foto) }}" class="glightbox">
                                 <img src="{{ url_for('static', filename='img/' + foto) }}" 
-                                     class="img-fluid w-100" 
-                                     style="height: 400px; object-fit: cover; border-radius: 8px;" 
-                                     loading="lazy" alt="Foto">
+                                 class="img-fluid w-100" 
+                                 style="height: 400px; object-fit: cover; border-radius: 8px;" 
+                                 loading="lazy" 
+                                 alt="Casa de playa Brisa el Milagro Pacasmayo - Vista de los espacios"> <!-- ALT OPTIMIZADO -->
                             </a>
                         </div>
                     </div>
@@ -161,10 +174,7 @@
                     <div class="swiper-slide">
                         <div class="photo-frame shadow-sm">
                             <a href="{{ url }}" class="glightbox">
-                                <img src="{{ url }}" 
-                                     class="img-fluid w-100" 
-                                     style="height: 400px; object-fit: cover; border-radius: 8px;" 
-                                     loading="lazy" alt="Foto">
+                                <img src="{{ url }}" class="img-fluid w-100" style="height: 400px; object-fit: cover; border-radius: 8px;" loading="lazy" alt="Foto">
                             </a>
                         </div>
                     </div>
@@ -197,14 +207,14 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Obtenemos las fechas desde Python
             const fechasBloqueadas = {{ bloqueadas | tojson | safe }};
-    
+
             const calendar = new VanillaCalendar('#calendar', {
                 settings: {
                     lang: 'es-ES',
                     selection: {
-                        day: false,   // El cliente no elige días
+                        day: false, // El cliente no elige días
                         month: true, // PERMITE ELEGIR MES
-                        year: true,  // PERMITE ELEGIR AÑO
+                        year: true, // PERMITE ELEGIR AÑO
                     },
                     visibility: {
                         theme: 'light', // Forzamos tema claro
@@ -221,8 +231,8 @@
                     }
                 }
             });
-            calendar.init();    
-    });
+            calendar.init();
+        });
     </script>
 
     <!-- === MEJORA 3: PREGUNTAS FRECUENTES (Ubicado estratégicamente antes de reservar) === -->
@@ -289,8 +299,10 @@
                                         <input type="email" class="form-control" id="res_email">
                                     </div>
 
-                                    <div class="col-12"><hr class="my-2"></div>
-                                    
+                                    <div class="col-12">
+                                        <hr class="my-2">
+                                    </div>
+
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold small">Fecha estimada de llegada</label>
                                         <input type="date" class="form-control" id="res_fecha">
@@ -319,7 +331,7 @@
                                         <label class="form-label fw-bold small">Cantidad de Niños</label>
                                         <input type="number" class="form-control" id="res_ninos" min="0" value="0">
                                     </div>
-                                    
+
                                     <div class="col-12 text-center mt-4">
                                         <button type="button" class="btn btn-dark btn-lg px-5 rounded-pill" onclick="enviarReserva()">
                                             <i class="fab fa-whatsapp me-2"></i> Enviar Solicitud por WhatsApp
@@ -344,15 +356,22 @@
 
                 <!-- === MEJORA 2: WIDGET CLIMA === -->
                 <div class="mb-4 col-md-8 mx-auto">
-                    <a class="weatherwidget-io" href="https://forecast7.com/es/n7d40n79d57/pacasmayo/" data-label_1="PACASMAYO" data-label_2="CLIMA ACTUAL" data-theme="pure" >PACASMAYO CLIMA ACTUAL</a>
+                    <a class="weatherwidget-io" href="https://forecast7.com/es/n7d40n79d57/pacasmayo/" data-label_1="PACASMAYO" data-label_2="CLIMA ACTUAL" data-theme="pure">PACASMAYO CLIMA ACTUAL</a>
                     <script>
-                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                        ! function(d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (!d.getElementById(id)) {
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = 'https://weatherwidget.io/js/widget.min.js';
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }
+                        }(document, 'script', 'weatherwidget-io-js');
                     </script>
                 </div>
 
                 <div class="ratio ratio-21x9 shadow-lg rounded mb-4 border border-2 mx-auto" style="max-width: 900px;">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.568466657864!2d-79.5783845856866!3d-7.455301594619717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjcnMTkuMSJTIDc5wrAzNCczNC4zIlc!5e0!3m2!1ses!2spe!4v1645000000000!5m2!1ses!2spe" 
-                            style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.568466657864!2d-79.5783845856866!3d-7.455301594619717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjcnMTkuMSJTIDc5wrAzNCczNC4zIlc!5e0!3m2!1ses!2spe!4v1645000000000!5m2!1ses!2spe" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
                 <a href="{{ info.mapa_link }}" target="_blank" class="btn btn-outline-dark btn-lg rounded-pill px-4 mb-5">
                     <i class="fas fa-map-marked-alt me-2"></i> Ver ruta en Google Maps
@@ -397,7 +416,7 @@
             <h3 class="section-title mb-4">Déjanos tu Comentario</h3>
             <div class="divider mx-auto mb-4"></div>
             <p class="mb-4 text-muted">Tu opinión nos ayuda a mejorar. Envíanos tu reseña por WhatsApp.</p>
-            
+
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card border-0 shadow-sm p-4">
@@ -424,7 +443,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="mt-5 text-dark small opacity-75">
                 &copy; {{ anio }} Derechos Reservados por la Empresa.
             </div>
@@ -474,36 +493,67 @@
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash');
-                if(splash){
+                if (splash) {
                     splash.classList.add('splash-hidden');
-                    setTimeout(() => { splash.style.display = 'none'; }, 1000);
+                    setTimeout(() => {
+                        splash.style.display = 'none';
+                    }, 1000);
                 }
             }, 2500);
         });
 
         // 2. Animaciones AOS
-        AOS.init({ duration: 1000, once: true });
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
 
         // 3. Swiper Galería
         var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 1, spaceBetween: 20, loop: true,
-            pagination: { el: ".swiper-pagination", clickable: true },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev"
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2
+                },
+                1024: {
+                    slidesPerView: 3
+                }
+            },
         });
 
         // 4. Lightbox (Zoom fotos)
-        const lightbox = GLightbox({ touchNavigation: true, loop: true, autoplayVideos: true });
+        const lightbox = GLightbox({
+            touchNavigation: true,
+            loop: true,
+            autoplayVideos: true
+        });
 
         // 5. Lógica del Calendario (MUESTRA LAS ❌)
         document.addEventListener('DOMContentLoaded', () => {
             const fechasBloqueadas = {{ bloqueadas | tojson | safe }};
-            
+
             const calendar = new VanillaCalendar('#calendar', {
                 settings: {
                     lang: 'es-ES',
-                    selection: { day: false, month: true, year: true },
-                    visibility: { theme: 'light', daysOutside: false }
+                    selection: {
+                        day: false,
+                        month: true,
+                        year: true
+                    },
+                    visibility: {
+                        theme: 'light',
+                        daysOutside: false
+                    }
                 },
                 actions: {
                     getDays(day, date, HTMLElement, self) {
@@ -520,7 +570,7 @@
         function toggleEspecificar() {
             const selectDias = document.getElementById('res_dias');
             const divEspecificar = document.getElementById('div_especificar');
-    
+
             if (selectDias.value === 'Otro') {
                 divEspecificar.style.display = 'block';
                 document.getElementById('res_dias_especificar').focus();
@@ -548,7 +598,7 @@
             let adultos = document.getElementById('res_adultos').value;
             let ninos = document.getElementById('res_ninos').value;
 
-            if(!nombre || !apellido || !celular || !dias) {
+            if (!nombre || !apellido || !celular || !dias) {
                 alert("Por favor completa los campos obligatorios (*)");
                 return;
             }
@@ -563,7 +613,7 @@
             let estrellas = document.getElementById('opi_puntuacion').value;
             let mensaje = document.getElementById('opi_mensaje').value;
 
-            if(!nombre || !mensaje) {
+            if (!nombre || !mensaje) {
                 alert("Por favor escribe tu nombre y comentario.");
                 return;
             }
@@ -578,12 +628,13 @@
         function initLiveCounter() {
             const badge = document.getElementById('liveCounterBadge');
             const countSpan = document.getElementById('viewerCount');
-            let minUsers = 3; let maxUsers = 20;
+            let minUsers = 3;
+            let maxUsers = 20;
             let currentUsers = Math.floor(Math.random() * (maxUsers - minUsers + 1)) + minUsers;
-            
+
             setTimeout(() => {
                 countSpan.innerText = currentUsers;
-                if(badge) badge.style.display = 'flex';
+                if (badge) badge.style.display = 'flex';
             }, 2000);
 
             setInterval(() => {
@@ -593,7 +644,7 @@
                 if (nextUsers > maxUsers) nextUsers = maxUsers - 1;
                 currentUsers = nextUsers;
                 countSpan.innerText = currentUsers;
-            }, 7000); 
+            }, 7000);
         }
 
         initLiveCounter();
@@ -616,7 +667,6 @@
                 btnReserva.classList.remove('show');
             }
         });
-        
     </script>
 
     <script>
@@ -672,13 +722,6 @@
     <a href="#reserva" class="floating-reserve-btn d-none d-lg-flex" id="btnReservaFlotante">
         <i class="fas fa-calendar-check me-2"></i> RESERVAR AHORA
     </a>
-    
+
 </body>
 </html>
-
-
-
-
-
-
-
