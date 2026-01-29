@@ -8,17 +8,31 @@ import cloudinary
 import cloudinary.uploader
 
 app = Flask(__name__)
+
+# 1. Configuración de la Clave Secreta
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'brisa_milagro_key_2025')
 
-# CONFIGURACIÓN DE BASE DE DATOS (Postgres para Vercel / SQLite local)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///database.db')
+# 2. CONFIGURACIÓN DE BASE DE DATOS (Optimizada para Supabase/Vercel)
+# Obtenemos la URL de la variable de entorno que configuraste en Vercel
+uri = os.environ.get('DATABASE_URL')
+
+if uri:
+    # Si la URI empieza con postgres:// lo cambiamos a postgresql:// (Requerido por SQLAlchemy)
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = uri
+else:
+    # Si no hay variable (uso local), usa SQLite
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# 3. Inicialización de extensiones
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-# CONFIGURACIÓN DE CLOUDINARY (Para subida de fotos)
+# 4. CONFIGURACIÓN DE CLOUDINARY
 cloudinary.config(
   cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'),
   api_key = os.environ.get('CLOUDINARY_API_KEY'),
@@ -192,3 +206,4 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
