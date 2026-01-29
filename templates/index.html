@@ -597,6 +597,26 @@
         }
 
         initLiveCounter();
+
+        // 9. LÓGICA DE FAVICON / TÍTULO DINÁMICO
+        let originalTitle = document.title;
+        window.addEventListener('blur', () => {
+            document.title = "¡Te extrañamos! 🌊 Brisa El Milagro";
+        });
+        window.addEventListener('focus', () => {
+            document.title = originalTitle;
+        });
+
+        // 10. MOSTRAR BOTÓN FLOTANTE AL SCROLLEAR
+        window.addEventListener('scroll', () => {
+            const btnReserva = document.getElementById('btnReservaFlotante');
+            if (window.scrollY > 500) {
+                btnReserva.classList.add('show');
+            } else {
+                btnReserva.classList.remove('show');
+            }
+        });
+        
     </script>
 
     <script>
@@ -630,9 +650,15 @@
         }, 1500);
     }
     </script>
+
+<!-- BOTÓN FLOTANTE DE RESERVA (Solo Desktop) -->
+<a href="#reserva" class="floating-reserve-btn d-none d-lg-flex" id="btnReservaFlotante">
+    <i class="fas fa-calendar-check me-2"></i> RESERVAR AHORA
+</a>
     
 </body>
 </html>
+
 
 
 
