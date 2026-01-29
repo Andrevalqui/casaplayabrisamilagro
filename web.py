@@ -7,32 +7,29 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import cloudinary
 import cloudinary.uploader
 
-app = Flask(__name__)
-
-# 1. Configuración de la Clave Secreta
+# FIX 1: instance_path='/tmp' evita el error de "Read-only file system"
+app = Flask(__name__, instance_path='/tmp')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'brisa_milagro_key_2025')
 
-# 2. CONFIGURACIÓN DE BASE DE DATOS (Optimizada para Supabase/Vercel)
-# Obtenemos la URL de la variable de entorno que configuraste en Vercel
+# FIX 2: Configuración de Base de Datos optimizada para Vercel + Supabase
 uri = os.environ.get('DATABASE_URL')
-
 if uri:
-    # Si la URI empieza con postgres:// lo cambiamos a postgresql:// (Requerido por SQLAlchemy)
     if uri.startswith("postgres://"):
         uri = uri.replace("postgres://", "postgresql://", 1)
+    # Supabase requiere SSL en la mayoría de conexiones externas
+    if "?" not in uri:
+        uri += "?sslmode=require"
     app.config['SQLALCHEMY_DATABASE_URI'] = uri
 else:
-    # Si no hay variable (uso local), usa SQLite
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# 3. Inicialización de extensiones
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-# 4. CONFIGURACIÓN DE CLOUDINARY
+# CONFIGURACIÓN DE CLOUDINARY
 cloudinary.config(
   cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'),
   api_key = os.environ.get('CLOUDINARY_API_KEY'),
@@ -194,16 +191,15 @@ def desbloquear_fecha(id):
         db.session.commit()
     return redirect(url_for('admin_panel'))
 
-# Inicializar Base de Datos
+# FIX 3: Inicialización segura para que no crashee si la DB tarda en responder
 with app.app_context():
-    db.create_all()
-    # Crear admin por defecto si no existe (Usuario: admin | Pass: Brisa2025)
-    if not User.query.filter_by(username='admin').first():
-        admin_user = User(username='admin', password=generate_password_hash('Brisa2025'))
-        db.session.add(admin_user)
-        db.session.commit()
+    try:
+        db.create_all()
+        if not User.query.filter_by(username='admin').first():
+            db.session.add(User(username='admin', password=generate_password_hash('Brisa2025')))
+            db.session.commit()
+    except Exception as e:
+        print(f"Error inicializando base de datos: {e}")
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
