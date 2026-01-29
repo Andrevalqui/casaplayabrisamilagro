@@ -577,9 +577,26 @@
         }
 
         initLiveCounter();
+
+        function transitionTo(url, message) {
+            const s = document.createElement('div');
+            s.className = 'premium-splash';
+            s.style.opacity = '0';
+            s.innerHTML = `<h1 class="splash-logo-text" style="font-size:2rem">${message}</h1><div class="loader-line"></div>`;
+            document.body.appendChild(s);
+            
+            // Pequeño delay para que la animación se note
+            setTimeout(() => {
+                s.style.opacity = '1';
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 1200);
+            }, 50);
+        }
     </script>
 </body>
 </html>
+
 
 
 
