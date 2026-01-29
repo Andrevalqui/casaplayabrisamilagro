@@ -3,51 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Ediciones | {{ info.nombre }}</title>
-    
-    <!-- CSS Externo -->
+    <title>Portal de Ediciones | Brisa El Milagro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=25">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=35">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-
-    <style>
-        body { background-color: #fcfcfc; font-family: 'Poppins', sans-serif; }
-        .admin-navbar { background: #1a1a1a !important; border-bottom: 2px solid #c5a47e; padding: 15px 0; }
-        .card-premium { border: none; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); transition: 0.3s; background: white; }
-        .card-premium:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(197, 164, 126, 0.1); }
-        .section-header { font-weight: 600; letter-spacing: 1px; color: #1a1a1a; border-left: 4px solid #c5a47e; padding-left: 15px; margin-bottom: 25px; }
-        .btn-gold-admin { background: #c5a47e; color: white; border-radius: 50px; padding: 10px 25px; font-weight: 600; border: none; transition: 0.3s; }
-        .btn-gold-admin:hover { background: #1a1a1a; color: #c5a47e; box-shadow: 0 5px 15px rgba(197, 164, 126, 0.3); }
-        .photo-slot { height: 180px; width: 100%; object-fit: cover; border-radius: 15px; border: 2px solid #f0f0f0; }
-        .delete-overlay { position: absolute; top: 10px; right: 10px; background: rgba(217, 83, 79, 0.9); color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
-        .delete-overlay:hover { background: #d9534f; transform: scale(1.1); }
-    </style>
 </head>
-<body>
+<body class="bg-light">
 
-    <!-- 3. SPLASH DE BIENVENIDA (Aparece al loguearse con éxito) -->
-    <div id="adminSplash" class="premium-splash">
+    <!-- 3. SPLASH DE BIENVENIDA (Aparece al entrar) -->
+    <div id="adminSplash" class="premium-splash active">
         <div class="text-center">
-            <p class="text-white-50 small ls-3 mb-2">ACCESO CONCEDIDO</p>
+            <p class="text-white-50 small ls-3 mb-2 text-uppercase">Acceso Concedido</p>
             <h1 class="splash-logo-text">BIENVENIDO AL PORTAL DE EDICIONES</h1>
             <div class="loader-line mx-auto"></div>
         </div>
     </div>
 
-    <!-- 4 & 5. NAVBAR CON BOTONES DINÁMICOS -->
-    <nav class="navbar admin-navbar navbar-dark sticky-top">
+    <nav class="navbar admin-navbar navbar-dark sticky-top shadow-lg">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <span style="font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: #c5a47e;">Brisa el Milagro</span>
-            </a>
+            <a class="navbar-brand" href="#" style="font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: #c5a47e;">Brisa el Milagro</a>
             <div class="d-flex gap-3">
-                <!-- Botón IR AL PORTAL WEB con Splash -->
-                <button onclick="transitionTo('/', 'REDIRIGIENDO A LA PÁGINA WEB...')" class="btn btn-outline-light btn-sm rounded-pill px-4">
+                <button onclick="transitionTo('/', 'REDIRECCIONANDO A LA PÁGINA WEB...')" class="btn btn-outline-light btn-sm rounded-pill px-4">
                     <i class="fas fa-external-link-alt me-2"></i> IR AL PORTAL WEB
                 </button>
-                <!-- Botón CERRAR SESIÓN -->
-                <a href="/logout" class="btn btn-danger btn-sm rounded-pill px-4" style="font-weight: 600;">
+                <a href="/logout" class="btn btn-danger btn-sm rounded-pill px-4">
                     <i class="fas fa-power-off me-2"></i> CERRAR SESIÓN
                 </a>
             </div>
@@ -55,105 +35,67 @@
     </nav>
 
     <div class="container py-5">
+        <!-- [MANTENER AQUÍ EL RESTO DEL CONTENIDO DE TUS CARDS DE CALENDARIO Y GALERÍA] -->
         <div class="row g-5">
-            
-            <!-- SECCIÓN 1: CALENDARIO -->
-            <div class="col-lg-4">
-                <div class="card card-premium p-4 h-100">
-                    <h5 class="section-header">GESTIÓN DE RESERVAS</h5>
-                    <p class="text-muted small">Selecciona los días que deseas bloquear en el calendario público.</p>
-                    
+             <div class="col-lg-4">
+                <div class="card admin-card p-4 h-100 shadow-sm border-0" style="border-radius: 20px;">
+                    <h5 class="fw-bold mb-4 border-start border-warning border-4 ps-3">CALENDARIO</h5>
                     <form action="/admin/bloquear" method="POST" class="mb-4">
-                        <div class="mb-3">
-                            <input type="date" name="fecha" class="form-control form-control-lg border-light bg-light" style="border-radius: 12px;" required>
-                        </div>
-                        <button class="btn btn-gold-admin w-100">
-                            <i class="fas fa-lock me-2"></i> BLOQUEAR FECHA
-                        </button>
+                        <input type="date" name="fecha" class="form-control mb-3" required>
+                        <button class="btn btn-gold w-100">BLOQUEAR FECHA</button>
                     </form>
-
-                    <div class="overflow-auto pe-2" style="max-height: 400px;">
-                        <label class="small fw-bold text-uppercase text-muted mb-3">Fechas Ocupadas:</label>
+                    <div class="overflow-auto" style="max-height: 300px;">
                         {% for f in fechas %}
-                        <div class="d-flex justify-content-between align-items-center p-3 mb-2 bg-light rounded-4 border-start border-warning border-3">
-                            <span class="fw-600 text-dark"><i class="far fa-calendar-check me-2"></i>{{ f.fecha }}</span>
-                            <a href="/admin/desbloquear/{{ f.id }}" class="text-danger text-decoration-none small fw-bold">ELIMINAR</a>
+                        <div class="d-flex justify-content-between p-2 bg-white rounded shadow-sm mb-2">
+                            <span>{{ f.fecha }}</span>
+                            <a href="/admin/desbloquear/{{ f.id }}" class="text-danger small">Eliminar</a>
                         </div>
                         {% endfor %}
                     </div>
                 </div>
             </div>
-
-            <!-- SECCIÓN 2: GALERÍA -->
             <div class="col-lg-8">
-                <div class="card card-premium p-4 h-100">
-                    <h5 class="section-header">GALERÍA DE EXPERIENCIAS</h5>
-                    <p class="text-muted small">Sube fotos nuevas para que aparezcan en el carrusel de "Nuestros Espacios".</p>
-                    
-                    <form action="/admin/subir" method="POST" enctype="multipart/form-data" class="mb-5 bg-light p-4 rounded-4 text-center border-2 border-dashed">
-                        <input type="file" name="archivo" class="form-control mb-3" accept="image/*" id="fileInput" required>
-                        <button class="btn btn-gold-admin px-5">
-                            <i class="fas fa-cloud-upload-alt me-2"></i> SUBIR A LA NUBE
-                        </button>
+                <div class="card admin-card p-4 h-100 shadow-sm border-0" style="border-radius: 20px;">
+                    <h5 class="fw-bold mb-4 border-start border-warning border-4 ps-3">GALERÍA</h5>
+                    <form action="/admin/subir" method="POST" enctype="multipart/form-data" class="mb-4">
+                        <div class="input-group">
+                            <input type="file" name="archivo" class="form-control" accept="image/*" required>
+                            <button class="btn btn-success">SUBIR FOTO</button>
+                        </div>
                     </form>
-
-                    <div class="row g-3">
+                    <div class="row g-2">
                         {% for foto in fotos %}
-                        <div class="col-md-4 position-relative">
-                            <img src="{{ foto.url }}" class="photo-slot shadow-sm">
-                            <a href="/admin/eliminar-foto/{{ foto.id }}" class="delete-overlay" title="Eliminar Imagen">
-                                <i class="fas fa-times"></i>
-                            </a>
+                        <div class="col-md-3 position-relative">
+                            <img src="{{ foto.url }}" class="img-fluid rounded" style="height: 120px; width: 100%; object-fit: cover;">
+                            <a href="/admin/eliminar-foto/{{ foto.id }}" class="btn btn-danger btn-sm position-absolute top-0 end-0">×</a>
                         </div>
                         {% endfor %}
-                        {% if not fotos %}
-                        <div class="text-center py-5 text-muted">
-                            <i class="fas fa-images fa-3x mb-3 opacity-20"></i>
-                            <p>No hay fotos dinámicas aún.</p>
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- SCRIPTS DINÁMICOS -->
     <script>
-        // Ocultar Splash de bienvenida después de 2 segundos
+        // Ocultar splash inicial
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const splash = document.getElementById('adminSplash');
-                splash.style.opacity = '0';
-                setTimeout(() => { splash.style.display = 'none'; }, 800);
-            }, 2200);
+                document.getElementById('adminSplash').classList.remove('active');
+            }, 2000);
         });
 
-        // 6. FUNCIÓN PREMIUM DE TRANSICIÓN
+        // Función de transición para botones
         function transitionTo(url, message) {
-            const splash = document.createElement('div');
-            splash.className = 'premium-splash';
-            splash.style.opacity = '0';
-            splash.innerHTML = `
+            const s = document.createElement('div');
+            s.className = 'premium-splash active';
+            s.innerHTML = `
                 <div class="text-center">
                     <h1 class="splash-logo-text" style="font-size: 2.2rem;">${message}</h1>
                     <div class="loader-line mx-auto"></div>
-                </div>
-            `;
-            document.body.appendChild(splash);
-
-            // Trigger animation
-            setTimeout(() => {
-                splash.style.opacity = '1';
-            }, 50);
-
-            // Redirigir
-            setTimeout(() => {
-                window.location.href = url;
-            }, 1400);
+                </div>`;
+            document.body.appendChild(s);
+            setTimeout(() => { window.location.href = url; }, 1400);
         }
     </script>
-
 </body>
 </html>
