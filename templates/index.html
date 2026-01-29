@@ -129,8 +129,8 @@
                     {% for foto in galeria %}
                     <div class="swiper-slide">
                         <div class="photo-frame shadow-sm">
-                            <a href="{{ url_for('static', filename='img/' + foto) }}" class="glightbox">
-                                <img src="{{ url_for('static', filename='img/' + foto) }}" 
+                            <a href="{{ foto.url }}" class="glightbox">
+                                <img src="{{ foto.url }}" 
                                      class="img-fluid w-100" 
                                      style="height: 400px; object-fit: cover; border-radius: 8px;" 
                                      loading="lazy"
@@ -147,6 +147,37 @@
             <p class="text-center text-muted mt-3 small"><i class="fas fa-search-plus"></i> Haz clic en las fotos para ampliarlas</p>
         </div>
     </section>
+
+    <!-- SECCIÓN DISPONIBILIDAD -->
+    <section id="disponibilidad" class="py-5 bg-light text-center">
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title">Calendario de Disponibilidad</h2>
+            <div class="divider mx-auto mb-4"></div>
+            <p class="mb-4">Los días marcados en <span class="badge bg-danger">Rojo</span> ya se encuentran reservados.</p>
+            <div id="calendar" class="mx-auto shadow-lg bg-white p-3 rounded" style="max-width: 400px;"></div>
+        </div>
+    </section>
+
+    <!-- Agregar estos links en el HEAD de tu index.html -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.css">
+    <!-- Agregar este script antes del final del BODY -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fechasBloqueadas = {{ bloqueadas | tojson }};
+            const calendar = new VanillaCalendar('#calendar', {
+                settings: { lang: 'es-ES', selection: { day: false } },
+                onInit(self) {
+                    fechasBloqueadas.forEach(fecha => {
+                        const el = self.HTMLElement.querySelector(`[data-calendar-day="${fecha}"]`);
+                        if (el) { el.classList.add('bg-danger', 'text-white', 'rounded-circle'); el.title = "Reservado"; }
+                    });
+                }
+            });
+            calendar.init();
+        });
+    </script>
 
     <!-- === MEJORA 3: PREGUNTAS FRECUENTES (Ubicado estratégicamente antes de reservar) === -->
     <section id="faq" class="py-5 bg-white">
@@ -506,5 +537,6 @@
     </script>
 </body>
 </html>
+
 
 
