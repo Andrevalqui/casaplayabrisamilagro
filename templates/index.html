@@ -186,18 +186,44 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Obtenemos las fechas desde Python
             const fechasBloqueadas = {{ bloqueadas | tojson }};
+    
             const calendar = new VanillaCalendar('#calendar', {
-                settings: { lang: 'es-ES', selection: { day: false } },
-                onInit(self) {
-                    fechasBloqueadas.forEach(fecha => {
-                        const el = self.HTMLElement.querySelector(`[data-calendar-day="${fecha}"]`);
-                        if (el) { el.classList.add('bg-danger', 'text-white', 'rounded-circle'); el.title = "Reservado"; }
-                    });
+                settings: {
+                    lang: 'es-ES',
+                    selection: {
+                    day: false,   // El cliente no elige días
+                    month: true, // PERMITE ELEGIR MES
+                    year: true,  // PERMITE ELEGIR AÑO
+                },
+                visibility: {
+                    theme: 'light', // Forzamos tema claro para que se lea mejor
+                }
+            },
+        // Esta función se ejecuta al cargar y cada vez que cambias de mes
+            onUpdate(self) {
+                applyBlockedDates(self);
+            },
+            onInit(self) {
+                applyBlockedDates(self);
+            }
+        });
+
+    // Función interna para poner las X
+        function applyBlockedDates(self) {
+            fechasBloqueadas.forEach(fecha => {
+            // Buscamos el elemento del DOM que tiene esa fecha
+                const el = self.HTMLElement.querySelector(`[data-calendar-day="${fecha}"]`);
+                if (el) {
+                    el.classList.add('blocked-date-mark');
+                    el.title = "Reservado";
                 }
             });
-            calendar.init();
-        });
+        }
+
+        calendar.init();
+    });
     </script>
 
     <!-- === MEJORA 3: PREGUNTAS FRECUENTES (Ubicado estratégicamente antes de reservar) === -->
@@ -558,6 +584,7 @@
     </script>
 </body>
 </html>
+
 
 
 
