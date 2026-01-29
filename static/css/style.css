@@ -650,24 +650,28 @@ html {
 }
 
 /* =========================================
-   BOTÓN FLOTANTE DE RESERVA PREMIUM
+   BOTÓN FLOTANTE DE RESERVA (Posición Ajustada)
    ========================================= */
 .floating-reserve-btn {
     position: fixed;
-    bottom: 30px;
-    left: 30px; /* Al lado opuesto de los iconos de redes */
+    /* LO SUBIMOS PARA QUE QUEDE ENCIMA DEL CONTADOR */
+    bottom: 90px !important; 
+    left: 20px !important; 
+    
     background: var(--color-gold);
     color: white !important;
-    padding: 15px 30px;
+    padding: 12px 25px; /* Un poquito más compacto para que se vea elegante */
     border-radius: 50px;
     font-weight: 600;
-    letter-spacing: 2px;
-    font-size: 0.8rem;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
     text-decoration: none;
     z-index: 998;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     transition: all 0.5s ease;
-    opacity: 0; /* Invisible al inicio */
+    
+    /* Estado inicial invisible */
+    opacity: 0; 
     transform: translateY(20px);
 }
 
