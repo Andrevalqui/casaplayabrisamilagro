@@ -117,12 +117,17 @@ def home():
         # Guardamos solo el nombre para que tu url_for del HTML funcione
         galeria_estatica = [img for img in archivos if img.lower().endswith(ext_validas)]
     
-    # 2. Galería dinámica (DB/Cloudinary)
-    fotos_db = FotoExtra.query.all()
-    galeria_dinamica = [f.url for f in fotos_db]
-    
-    # 3. Fechas bloqueadas
-    bloqueadas = [b.fecha for b in FechaBloqueada.query.all()]
+    # 2. y 3. Galería dinámica y Fechas (CON PROTECCIÓN ANTI-ERRORES)
+    try:
+        # Intentamos conectar a la base de datos
+        fotos_db = FotoExtra.query.all()
+        galeria_dinamica = [f.url for f in fotos_db]
+        bloqueadas = [b.fecha for b in FechaBloqueada.query.all()]
+    except Exception as e:
+        # Si falla (base de datos dormida), imprimimos el error pero NO rompemos la página
+        print(f"Advertencia - Base de Datos no disponible: {e}")
+        galeria_dinamica = []
+        bloqueadas = []
     
     mensaje = f"Hola, vi la web de {CASA_INFO['nombre']} y quisiera información."
     ws_link = f"https://wa.me/{CASA_INFO['whatsapp']}?text={mensaje.replace(' ', '%20')}"
@@ -225,3 +230,4 @@ with app.app_context():
             
     except Exception as e:
         print(f"Error: {e}")
+
